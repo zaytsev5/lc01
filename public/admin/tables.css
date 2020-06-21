@@ -1,0 +1,244 @@
+.panel-chose-table{
+	position: absolute;
+	z-index: 2;
+	top: 70px;
+	left: 30px;
+	width: 1050px;
+	height: 100px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 20px;
+	font-size: 15px;
+}
+.item-chose-table{
+	width: 100px;
+	height: 40px;
+	background-color: white;
+	text-align: center;
+	border-radius: 5px;
+	color: black;
+	line-height: 40px;
+}
+.item-chose-table-active{
+	width: 100px;
+	height: 40px;
+	background-color: #3256a4 ;
+	text-align: center;
+	border-radius: 5px;
+	color: white;
+	line-height: 40px;
+}
+.item-chose-table:hover{
+	background-color: #EDEDED;
+}
+.panel-timkiem{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 30px;
+	width: 320px;
+	height: 200px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 70px;
+	font-size: 15px;
+	text-align: center;
+}
+.panel-timkiem-user{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left:  750px;
+	width: 320px;
+	height: 200px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 70px;
+	font-size: 15px;
+	text-align: center;
+}
+.panel-timkiem-chuyenxe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 30px;
+	width: 500px;
+	height: 300px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 70px;
+	font-size: 15px;
+	text-align: center;
+}
+.buttonSearch{
+	width: 50px;
+	height: 50px;
+	font-size: 40px;
+	border: none;
+	border-radius: 70px;
+	background-color: #DBDBDB;
+}
+.buttonReload{
+	position: absolute;
+	z-index: 2;
+	bottom: 30px;
+	right: 30px;
+	width: 50px;
+	height: 50px;
+	font-size: 40px;
+	border: none;
+	border-radius: 70px;
+	background-color: #DBDBDB;
+}
+.buttonSearch:hover,.buttonReload:hover{
+	background-color: #ABABAB;
+}
+.panel-table-benxe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+
+.panel-table-xe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+.panel-table-tuyenxe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+.panel-table-chuyenxe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 12px;
+}
+
+.panel-table-khachhang{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+.panel-table-taikhoan{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	right: 30px;
+	width: 600px;
+	height: 500px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+.panel-table-vexe{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+
+.panel-table-hoadon{
+	position: absolute;
+	z-index: 2;
+	top: 200px;
+	left: 380px;
+	width: 700px;
+	height: 420px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+.panel-table-user{
+	position: absolute;
+	z-index: 2;
+	top: 100px;
+	left:  30px;
+	width: 700px;
+	height: 500px;
+	background-color: white;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	padding: 50px;
+	font-size: 15px;
+}
+.title-table-user{
+	position: absolute;
+	z-index: 3;
+	top: 70px;
+	left:  60px;
+	width: 300px;
+	height: 60px;
+	background-color:#3256a4 ;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.075);
+	border-radius: 5px;
+	line-height: 60px;
+	font-size: 15px;
+	color: white;
+	font-size: 20px;
+	text-align: center;
+}
+.divtable{
+	overflow: auto;
+	height: 330px;
+}
