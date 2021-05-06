@@ -1,18 +1,23 @@
 const paypal = require('paypal-rest-sdk')
 const nodemailer = require('nodemailer')
-const UserMysql = require('../models/UserMysql');
+const UserMysql = require('../services/database.service');
 
-
+//only for PAYPAL
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AWgYYDvYvC35qGNvoTs8QDLUZdl8kmaOISELHK1lAA6GcEhjMc5eCR-c54eOVOLOuNyWQE7fpkoD5w_w',
+  'client_secret': 'EDvXzdrHt_E6fWCdiE5ifE27TceUXVCcea9_iO3jl0u4XlFRiFYcrz1Lo6uXaLKKVZ0zOKGh9HfjQdc1'
+});
 
 module.exports = {
-  doPayment: async function(response,request){
+  doPayment: async function(req, res){
       const create_payment_json = {
           "intent": "sale",
           "payer": {
               "payment_method": "paypal"
           },
           "redirect_urls": {
-              "return_url": "http://localhost:5000/success",
+              "return_url": "http://localhost:5000/api/v1/payment?method=paypal&status=true",
               "cancel_url": "http://localhost:5000/cancel"
           },
           "transactions": [{
@@ -42,15 +47,15 @@ module.exports = {
             for(let k = 0;k < payment.links.length;k++){
               if(payment.links[k].rel === 'approval_url'){
                 // console.log(payment.links[k].href)
-                  return response.send({link:payment.links[k].href})
-                // response.redirect(payment.links[i].href);
+                  return res.send({link:payment.links[k].href})
+                // res.redirect(payment.links[i].href);
               }
             }
             console.log("hrere")
         }
       });
 },
-sendMailToCus: function (response,request,customer){
+sendMailToCus: function (res,req,customer){
   UserMysql.getInfoPost(customer.MaCX,(result)=>{
     if(result.length > 0){
       const output = `
@@ -94,27 +99,30 @@ sendMailToCus: function (response,request,customer){
       transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
             return ;
-             // return response.send({status:false})
+             // return res.send({status:false})
           }
           console.log('Message sent: %s', info.messageId);   
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
           console.log('Sent!')
-          // response.send({status:true})
+          // res.send({status:true})
       });
     }
   })
   
 },
-checkSeatAgain:function(customer,UserMysql){
+finalCheckSeatStatus:function(postid,seats){
   return new Promise(resolve => {
-    UserMysql.findSeat(customer.MaCX,(result) =>{
+    UserMysql.findSeatsBooked(postid,(result) =>{
       if(result){
-        for(let i in result){
-          for(let k in customer.SLGhe){
-            if(result[i].SoGhe == customer.SLGhe[k]) resolve(true)
-          }
-        }
-        resolve(false)
+        // for(let i in result){
+        //   for(let k in customer.SLGhe){
+        //     if(result[i].SoGhe == customer.SLGhe[k]) resolve(true)
+        //   }
+        // }
+        let found =  result.some(r=> seats.indexOf(r) >= 0)
+
+        if(found) resolve(true)
+        else resolve(false)
       }
     })
   })

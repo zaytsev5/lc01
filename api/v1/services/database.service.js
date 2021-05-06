@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const VeXe = require('../modelsAdmin/chitietvexeModels');
+// const VeXe = require('../modelsAdmin/chitietvexeModels');
 
 //MySql config
 const mysqlDB = mysql.createConnection({
@@ -12,7 +12,7 @@ const mysqlDB = mysql.createConnection({
 
 mysqlDB.connect(function(err){
   if(err) return console.log(err)
-  console.log("Mysql connected...")
+//   console.log("Mysql connected...")
 })
 
 
@@ -58,7 +58,7 @@ module.exports = {
  		callback({isAdded:true})
  	})
  },
- findPostTime: function(trip,date,time,callback){
+ getPostByDateTime: function(trip,date,time,callback){
  	let query = 'select * from vexe where vexe.MaCX = (select chuyenxe.MaCX from chuyenxe where chuyenxe.MaTX =? and chuyenxe.NgayDi=? and chuyenxe.GioDi=?)';
  	let bind = [];
  	bind.push(trip);bind.push(date);bind.push(time)
@@ -67,7 +67,7 @@ module.exports = {
  		callback(result)
  	})
  },
- getTimePost:function(trip,date,callback){
+ getPostsOfTripByDate:function(trip,date,callback){
  	let query = 'select * from chuyenxe where chuyenxe.MaCX = chuyenxe.MaCX and  chuyenxe.MaTX =? and chuyenxe.NgayDi=?';
  	let bind = [];
  	bind.push(trip);bind.push(date)
@@ -114,7 +114,7 @@ module.exports = {
  		callback(result)
  	})
  },
- findSeat:function(postID,callback){
+ getSeatsBooked:function(postID,callback){
  	let query = 'select SoGhe from vexe where MaCX=?'
  	let bind = [];
  	bind.push(postID);
@@ -178,6 +178,14 @@ module.exports = {
  		if(err) return callback(notdone)
  			callback(result)
  	})
+ },
+ reviewTicket: function(id, callback){
+	let query = 'select * from `khachhang` where Email=?';
+	let notdone =false;
+	mysqlDB.query(query,email,(err, result) =>{
+		if(err) return callback(notdone)
+			callback(result)
+	})
  }
  ,
  checkTicket:function(ticketId,callback){
@@ -243,7 +251,7 @@ module.exports = {
  			callback(result)
  	})
  },
- getDateGoPost:function(postID,callback){
+ getPostDetailed:function(postID,callback){
  	// let query =`SELECT chuyenxe.MaTX, chuyenxe.MaCX,chuyenxe.BienSoXe,benxe.TenBX,tuyenxe.DonGia
 	// FROM chuyenxe
 	// INNER JOIN benxe ON chuyenxe.MaBXDi =  benxe.MaBX
@@ -266,5 +274,18 @@ module.exports = {
  		if(err) return callback(false)
  			callback(result)
  	})
- }
+ },
+ findSeatsBooked:function(postID,callback){
+	let query = 'select SoGhe from vexe where MaCX=?'
+	let bind = [];
+	let array_of_seats = []
+	bind.push(postID);
+	mysqlDB.query(query,bind,(err,result)=>{
+		if(err) return console.log(err.message)
+		result.map(e => {
+			array_of_seats.push(e.SoGhe)
+		})
+		callback(array_of_seats)
+	})
+},
 };

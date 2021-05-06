@@ -4,9 +4,9 @@ const fetch = require('node-fetch')
 const router = express.Router();
 const paypal = require('paypal-rest-sdk')
 const { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} = require('../config/auth');
-const User = require('../models/User');
-const UserMysql = require('../models/UserMysql');
-const {doPayment, sendMailToCus,checkSeatAgain} = require('../config/payment');
+const User = require('../models/Client');
+const UserMysql = require('../models/mysql.service');
+const {doPayment, sendMailToCus,checkSeatAgain} = require('../config/payment.gateway');
 const Ticket = require('../models/Ticket')
 const nodemailer = require('nodemailer')
 const emailExistence = require('email-existence')
@@ -41,7 +41,8 @@ router.get('/booking/tickets',(req,res) =>{
 
 
 router.post('/customer/insert',async (req, res) =>{
-  // const {CMND,TenKH,Email,SDT,GioiTinh,DiaChi} = req.body;
+  // return doPayment(req,res)
+  const {CMND,TenKH,Email,SDT,GioiTinh,DiaChi} = req.body;
   if(req.body){
     const {TenKH,Email,SDT,GioiTinh,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
     customer = req.body;
@@ -52,19 +53,19 @@ router.post('/customer/insert',async (req, res) =>{
     bind.push(SDT) 
     bind.push(GioiTinh) 
     bind.push(DiaChi) 
-    console.log(`Số lượng ghế ${SLGhe.length}`)
+    console.log(`[💺]-Số lượng ghế ${SLGhe.length}`)
     let next = true;
                 
     if(req.user && req.user.role == "user"){
-      console.log("logged")
+      console.log("[👋]-User has logged in.")
       // CHECK USER HAS BOOK ANY TICKET EVER?
        UserMysql.findUserByEmail(req.user.email,(result)=>{
           if(result.length > 0) return doPayment(res,req)
           else{
-            console.log("First time")
+            console.log("[🆕]-first time booking.")
                UserMysql.save(bind,(result)=>{
                   if(result) {
-                    return doPayment(res,req)
+                    return doPayment(req,res)
                   }
                   else return res.status(201).send({status:1})
                 })
@@ -77,7 +78,7 @@ router.post('/customer/insert',async (req, res) =>{
           if(response)
              UserMysql.findCusByEmail(Email, async (result)=>{
               if(result.length > 0){
-                 console.log("Customer exist")
+                 console.log("[👋]-customer exist")
                  customer.Email = result[0].Email;
                  customer.TenKH = result[0].TenKH;
                  customer.SDT = result[0].SDT;
@@ -89,7 +90,7 @@ router.post('/customer/insert',async (req, res) =>{
                 
                
               }else{
-                  console.log("Customer doesnt exist")
+                  console.log("[👋]-customer doesnt exist")
                     UserMysql.save(bind,(result)=>{
                         if(result) {
                           doPayment(res,req);                       
@@ -121,10 +122,10 @@ router.get('/getID/:src/:des',(req, res)=>{
 
 router.get('/booking/ticket/:ticketId', (req,res) =>{
   //console.log("checking info ticket")
-  console.log(req.params.ticketId)
+  console.log(`[✔]-checking ticket ${req.params.ticketId}`)
   UserMysql.checkTicket(req.params.ticketId,(result)=>{
     if(result) return res.status(200).json(result)
-    console.log("err")
+    console.log(`[🛑]-${err.message}`)
   })
 })
 
@@ -132,7 +133,9 @@ router.get('/info/:tripId', (req,res) =>{
  //console.log("getting info trip")
   UserMysql.getInfoTrip(req.params.tripId,(result)=>{
     if(result) return res.status(200).json(result)
-    console.log("err when getting info trip")
+    // console.log("err when getting info trip")
+    console.log(`[🛑]-${err.message}`)
+
   })
 })
 
@@ -156,7 +159,7 @@ router.get('/time/:trip/:date', (req, res) =>{
 });
 
 router.get('/post/:trip/:date/:time', (req, res) =>{
-  UserMysql.findPostTime(
+  UserMysql.findPostByDateTime(
     req.params.trip,
     req.params.date,
     req.params.time,(post)=>{
@@ -175,7 +178,7 @@ router.get('/trip',(req,res) =>{
 
 
 router.get('/getPostDetails/:postID',(req,res)=>{
-  UserMysql.getDateGoPost(req.params.postID,(result)=>{
+  UserMysql.getPostDetailed(req.params.postID,(result)=>{
     if(result) return res.status(200).json(result)
   })
 })
@@ -199,12 +202,12 @@ router.get('/users',ensureAuthenticated, async (req, res) =>{
 );
 
 router.get('/home',(req,res) => {
-   if(req.query.d){
-    console.log(req.query.d);
-  }
-  res.render('home',{
-    user:req.user
-  })
+  // console.log("hello");
+  // res.json(req.user ? req.user : {message: "nothing"})
+  //  if(req.query.d){
+  //   console.log(req.query.d);
+  // }
+  res.render('home')
 })
 
 router.get('/hiring',(req,res)=>{

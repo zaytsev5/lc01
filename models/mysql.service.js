@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const VeXe = require('../modelsAdmin/chitietvexeModels');
 
 //MySql config
 const mysqlDB = mysql.createConnection({
@@ -11,7 +12,7 @@ const mysqlDB = mysql.createConnection({
 
 mysqlDB.connect(function(err){
   if(err) return console.log(err)
-  console.log("Mysql connected...")
+  console.log("[⚡️] - mysql connected...")
 })
 
 
@@ -57,7 +58,7 @@ module.exports = {
  		callback({isAdded:true})
  	})
  },
- findPostTime: function(trip,date,time,callback){
+ getPostByDateTime: function(trip,date,time,callback){
  	let query = 'select * from vexe where vexe.MaCX = (select chuyenxe.MaCX from chuyenxe where chuyenxe.MaTX =? and chuyenxe.NgayDi=? and chuyenxe.GioDi=?)';
  	let bind = [];
  	bind.push(trip);bind.push(date);bind.push(time)
@@ -66,7 +67,7 @@ module.exports = {
  		callback(result)
  	})
  },
- getTimePost:function(trip,date,callback){
+ getPostsOfTrip:function(trip,date,callback){
  	let query = 'select * from chuyenxe where chuyenxe.MaCX = chuyenxe.MaCX and  chuyenxe.MaTX =? and chuyenxe.NgayDi=?';
  	let bind = [];
  	bind.push(trip);bind.push(date)
@@ -113,7 +114,7 @@ module.exports = {
  		callback(result)
  	})
  },
- findSeat:function(postID,callback){
+ findSeatsBooked:function(postID,callback){
  	let query = 'select SoGhe from vexe where MaCX=?'
  	let bind = [];
  	bind.push(postID);
@@ -204,6 +205,13 @@ module.exports = {
  	})
  	
  },
+ getAllTickets : function(pid,callback){
+	let query = `select * from vexe,hoadon,chuyenxe where vexe.MaVeXe = hoadon.MaVeXe and vexe.MaCX = chuyenxe.MaCX ${pid ? 'and vexe.MaCX= ?' : 'and 1=?' }`;
+	mysqlDB.query(query,pid ? pid : 1,(err, result) =>{
+		if(err) return callback(err)
+			callback(result)
+	})
+ },
  findUserByEmail:function(email,callback){
  	let query = 'select Email from khachhang where Email=? limit 1'
  	mysqlDB.query(query,email,(err, result) =>{
@@ -235,7 +243,7 @@ module.exports = {
  			callback(result)
  	})
  },
- getDateGoPost:function(postID,callback){
+ getPostDetailed:function(postID,callback){
  	// let query =`SELECT chuyenxe.MaTX, chuyenxe.MaCX,chuyenxe.BienSoXe,benxe.TenBX,tuyenxe.DonGia
 	// FROM chuyenxe
 	// INNER JOIN benxe ON chuyenxe.MaBXDi =  benxe.MaBX

@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const { ensureAuthenticated, forwardAuthenticated, ensureAuthenticatedAdmin } = require('../helpers/authorize');
-const User = require('../../../models/User');
+const Client = require('../../../models/Client');
 const Ticket = require('../../../models/Ticket')
+const Review = require('../../../models/Review')
 const USER_ACTIONS = require('../helpers/user.actions')
 const ROLE = require('../helpers/role')
-
+const DbService = require('../services/database.service')
 
 require('../../../config/passport.conf')(passport);
 
+let uid = null;
 
 router.get('/tickets_cancled', ensureAuthenticated(ROLE.ADMIN), (req, res) => {
 
@@ -30,10 +32,34 @@ router.get('/set_approved', ensureAuthenticated(ROLE.ADMIN), (req, res) => {
     })
 })
 
-router.get('/me',  (req, res) => {
-  req.user
-  ? res.status(200).json(req.user)
-  : res.sendStatus(404);
+router.get('/me',ensureAuthenticated(ROLE.USER), (req, res) => {
+  // ? res.status(200).json(req.user)
+  // : res.status(404).json({
+  //   message: 'not authorized...'
+  // });
+  return res.status(200).json(req.user)
+})
+
+router.post('/register',(req, res) =>{
+  let new_client = new Client(req.body)
+  Client.findOne({
+    email: new_client.email
+  }).then(user => {
+    user
+    ? res.status(400).json({message: 'email is being used, please use another...'})
+    : new_client.save()
+      .then((rs, err) => {
+        if(err)
+          return res.status(400).json({
+            message: 'failed to register....'
+          })
+        return res.status(200).json({
+          message: 'successed! you can log in now...'
+        })
+      })
+    })
+  
+
 })
 
 router.post('/me', ensureAuthenticated(ROLE.USER), (req, res) => {
@@ -55,8 +81,17 @@ router.post('/me', ensureAuthenticated(ROLE.USER), (req, res) => {
 
 })
 
-router.post('/booking/:tripId', ( req, res) => {
-  let trip_id = req.params.tripId
+router.get('/booked_tickets',ensureAuthenticated(ROLE.USER), (req, res) => {
+  DbService.getAllTicketsByEmail(req.user.email, (result) => {
+    if(result) return res.status(200).json(result)
+    return res.status(400).json({
+      message: 'failed to get request....'
+    })
+  })
+})
+
+router.post('/booking/:trip_id', ( req, res) => {
+  let trip_id = req.params.trip_id
   let infos = req.body
   console.log(req.user);
   console.log(infos);
@@ -69,23 +104,68 @@ router.post('/booking/:tripId', ( req, res) => {
 router.get('/login/error', (req, res) => {
   return res.status(400).json({
     type: 'error',
-    message: 'Failed to login.'
+    message: 'Falied to login....'
   })
 })
 
+// router.post('/login', (req, res, next) => {
+//   console.log("someone trynna logging in");
+//   passport.authenticate('local', {
+//     successRedirect: '/api/v1/user/me',
+//     failureRedirect: '/api/v1/user/login/error',
+//   })(req, res, next);
+// });
+
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/api/v1/user/me',
-    failureRedirect: '/api/v1/user/login/error',
-  })(req, res, next);
+  let { email, password} = req.body
+  console.log("someone trynna logging in");
+  Client.findOne({
+    email: email
+  }).then(user => {
+    if (!user) {
+      return res.status(401).json({
+        msg : 'unauthorized...'
+      })
+    }
+    uid = email;
+    return res.status(200).json(user)
+  })
 });
 
 router.get('/logout', (req, res) => {
   req.logout();
   return res.status(200).json({
-    status: 'OK',
-    message: 'Logged out.'
+    message: 'you just have logged out...'
   })
 });
+
+router.post('/review',ensureAuthenticated(ROLE.USER),(req, res) => {
+  const {plate, stars} = req.body
+  // console.log(`Yo`);
+  let new_review =  new Review(req.body)
+
+  Review.findOne({
+    plate: req.body.plate
+  }).then((rs, err) => {
+    if(err) return res.status(400).json({msg: 'failed to request..'})
+    if(rs){
+      Review.updateOne({'plate': plate},{$set: { 'times' : rs.times + 1,'stars': rs.stars + stars}},(err, rs) =>{
+        if(err) return res.status(400).json({error:err.message})
+        return res.status(200).json({msg:'reviewed successfully...'})
+      })
+    }else{
+      new_review.save()
+      .then((rs, err) => {
+        if(err) return res.status(400).json({message: 'failed to review...'})
+        return res.status(200).json({
+          message: `reviewed successfully..`
+        })
+      })
+    }
+  })
+  
+})
+
+
 
 module.exports = router;

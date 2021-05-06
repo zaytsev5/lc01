@@ -10,14 +10,14 @@ const app = express();
 
 
 // Load User model
-const User = require('../models/User');
-const UserMysql = require('../models/UserMysql');
+const User = require('../models/Client');
+const UserMysql = require('../models/mysql.service');
 const Ticket = require('../models/Ticket');
 const Cancle = require('../config/cancle')
 
 // Middleware
 const { ensureAuthenticated,forwardAuthenticated,ensureAuthenticatedForUser } = require('../config/auth');
-require('../config/passport')(passport);
+require('../config/passport.conf')(passport);
 // Login Page
 
 // Register Page
@@ -242,6 +242,7 @@ router.post('/me/email', (req,res) =>{
 })
 // Register handler
 router.post('/account/register', (req, res) => {
+  console.log("hahaha");
   const { name, email, password, password2 } = req.body;
   const role = "user";
   let errors = [];
@@ -320,10 +321,12 @@ router.post('/account/register', (req, res) => {
   
 });
 
+
 // Login handler
 router.post('/account/login', (req, res, next) => {
+  console.log("loggin");
   passport.authenticate('local', {
-    successRedirect: '/home',
+    successRedirect: '/api/v1/user/me',
     failureRedirect: '/user/account#dangnhap',
     failureFlash: true
   })(req, res, next);
@@ -335,6 +338,10 @@ router.get('/logout', (req, res) => {
   req.flash('success_msg', 'Bạn đã đăng xuất');
   res.redirect('/user/account#dangnhap');
 });
+
+router.post('/signup',(req, res) => {
+  //some code for sign up function
+})
 
 module.exports = router;
 
