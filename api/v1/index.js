@@ -74,8 +74,33 @@ router.get('/posts', (req, res) => {
   const {tripid, date, time} = req.query
   DbService.getPostByDateTime(tripid, date, time,(result) => {
     result
-    ? res.status(200).json({result})
+    ? res.status(200).json(result)
     : res.status(400).json({message:'failed to get..'})
+  })
+})
+
+router.get('/m/posts', (req, res) => {
+  console.log(" [ℹ] - finding post by date, time....<mobile-version>");
+  const {tripid, date, time} = req.query
+  let seats = []
+
+  Array(30).fill(null).map((e,i) => {
+    seats.push({
+      code: `A${i}`,
+      isBooked :false
+    })
+  })
+  //  res.json(seats)
+
+  DbService.getPostByDateTime(tripid, date, time,(result) => {
+    if(result){
+      result.map(e => {
+        seats[parseFloat(e.SoGhe.slice(1,3)) - 1].isBooked = true;
+      })
+       res.status(200).json(seats)
+      // res.json({size:seats.length})
+    }else
+     res.status(400).json({message:'failed to get..'})
   })
 })
 
@@ -84,7 +109,7 @@ router.get('/trip', (req, res) => {
   const { tripid, date } = req.query
   DbService.getPostsOfTripByDate(tripid, date, (result) => {
     result
-    ? res.status(200).json({result})
+    ? res.status(200).json(result)
     : res.status(400).json({message: 'failed to get posts of trip..'})
   })
 })

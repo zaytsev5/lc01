@@ -14,16 +14,13 @@ module.exports = function(passport) {
         email: email
       }).then(user => {
         if (!user) {
-          console.log("wrong1");
-          return done(null,false);
+          return done(null, false);
         }
       
         if(user.password !== password){
-          console.log("wrong");
           return done(null, false)
 
         }
-        console.log("im in");
         return done(null,user)
 
       //   // Match password

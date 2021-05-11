@@ -104,19 +104,19 @@ router.post('/booking/:trip_id', ( req, res) => {
 router.get('/login/error', (req, res) => {
   return res.status(400).json({
     type: 'error',
-    message: 'Falied to login....'
+    message: 'Falied to login, maybe wrong crenditals'
   })
 })
 
-// router.post('/login', (req, res, next) => {
-//   console.log("someone trynna logging in");
-//   passport.authenticate('local', {
-//     successRedirect: '/api/v1/user/me',
-//     failureRedirect: '/api/v1/user/login/error',
-//   })(req, res, next);
-// });
-
 router.post('/login', (req, res, next) => {
+  console.log("someone trynna logging in");
+  passport.authenticate('local', {
+    successRedirect: '/api/v1/user/me',
+    failureRedirect: '/api/v1/user/login/error',
+  })(req, res, next);
+});
+
+router.post('/m/login', (req, res, next) => {
   let { email, password} = req.body
   console.log("someone trynna logging in");
   Client.findOne({
@@ -138,6 +138,16 @@ router.get('/logout', (req, res) => {
     message: 'you just have logged out...'
   })
 });
+
+router.get('/tickets',async (req, res) =>{
+         DbService.getAllTicketsByEmail('thanhhien2498@gmail.com',(result)=>{
+            if(result) return res.status(200).json(result)
+         })
+    //  }
+        
+ //  });
+ 
+})
 
 router.post('/review',ensureAuthenticated(ROLE.USER),(req, res) => {
   const {plate, stars} = req.body
@@ -165,6 +175,7 @@ router.post('/review',ensureAuthenticated(ROLE.USER),(req, res) => {
   })
   
 })
+
 
 
 

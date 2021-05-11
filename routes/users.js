@@ -175,12 +175,12 @@ router.post('/confirm',async (req,res) =>{
     
   
 })
-router.get('/allTickets',ensureAuthenticated,async (req, res) =>{
+router.get('/allTickets',async (req, res) =>{
   //console.log(req.user.email)
   // UserMysql.findUserByEmail(req.user.email,(result)=>{
      // if(result){
        console.log("in");
-         UserMysql.getAllTicketsByEmail(req.user.email,(result)=>{
+         UserMysql.getAllTicketsByEmail('thanhhien2498@gmail.com',(result)=>{
             if(result) return res.status(200).json(result)
          })
     //  }
