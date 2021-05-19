@@ -60,7 +60,7 @@ router.post('/customer/insert',async (req, res) =>{
       console.log("[👋]-User has logged in.")
       // CHECK USER HAS BOOK ANY TICKET EVER?
        UserMysql.findUserByEmail(req.user.email,(result)=>{
-          if(result.length > 0) return doPayment(res,req)
+          if(result.length > 0) return doPayment(req,res)
           else{
             console.log("[🆕]-first time booking.")
                UserMysql.save(bind,(result)=>{
@@ -85,7 +85,7 @@ router.post('/customer/insert',async (req, res) =>{
                  customer.DiaChi = result[0].DiaChi;
                  customer.GioiTinh = result[0].GioiTinh;
                  console.log(customer)
-                 doPayment(res,req);
+                 doPayment(req,res)
 
                 
                
@@ -93,7 +93,7 @@ router.post('/customer/insert',async (req, res) =>{
                   console.log("[👋]-customer doesnt exist")
                     UserMysql.save(bind,(result)=>{
                         if(result) {
-                          doPayment(res,req);                       
+                          doPayment(req,res)                       
                         }
                         else return res.status(201).send({status:1})
                     })    
@@ -153,13 +153,13 @@ router.get('/post/:trip/:date', (req, res) =>{
 });
 
 router.get('/time/:trip/:date', (req, res) =>{
-  UserMysql.getTimePost(req.params.trip,req.params.date,(post)=>{
+  UserMysql.getPostsOfTrip(req.params.trip,req.params.date,(post)=>{
    res.json(post)
   })
 });
 
 router.get('/post/:trip/:date/:time', (req, res) =>{
-  UserMysql.findPostByDateTime(
+  UserMysql.getPostByDateTime(
     req.params.trip,
     req.params.date,
     req.params.time,(post)=>{
@@ -184,7 +184,7 @@ router.get('/getPostDetails/:postID',(req,res)=>{
 })
 
 router.get('/checkseat/:postId',(req, res) =>{
-  UserMysql.findSeat(req.params.postId,(result) =>{
+  UserMysql.findSeatsBooked(req.params.postId,(result) =>{
       res.status(200).send(result)
   })
 })
@@ -207,7 +207,7 @@ router.get('/home',(req,res) => {
   //  if(req.query.d){
   //   console.log(req.query.d);
   // }
-  res.render('home')
+  res.render('home',{user: req.user})
 })
 
 router.get('/hiring',(req,res)=>{

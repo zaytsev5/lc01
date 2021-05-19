@@ -6,6 +6,7 @@ const session = require('express-session');
 const app = express();
 const path = require('path')
 const favicon = require('serve-favicon')
+
 const errorHandler = require('./api/v1/helpers/error-handler')
 const routeAdmin = require('./routes/admin')
 const routeUser = require('./routes/users')
@@ -26,6 +27,13 @@ const API_User = require('./routesAdmin/userRoutes')
 const db = require('./config/mongodb.key').mongoURI;
   
 app.use(express.json())
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
 // EJS
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');

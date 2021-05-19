@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const { ensureAuthenticated, forwardAuthenticated, ensureAuthenticatedAdmin } = require('../helpers/authorize');
+const jwt = require('jsonwebtoken')
 const Client = require('../../../models/Client');
 const Ticket = require('../../../models/Ticket')
 const Review = require('../../../models/Review')
@@ -32,12 +33,8 @@ router.get('/set_approved', ensureAuthenticated(ROLE.ADMIN), (req, res) => {
     })
 })
 
-router.get('/me',ensureAuthenticated(ROLE.USER), (req, res) => {
-  // ? res.status(200).json(req.user)
-  // : res.status(404).json({
-  //   message: 'not authorized...'
-  // });
-  return res.status(200).json(req.user)
+router.get('/me',verifyToken, (req, res) => {
+  res.status(200).json(req.user)
 })
 
 router.post('/register',(req, res) =>{
@@ -62,7 +59,7 @@ router.post('/register',(req, res) =>{
 
 })
 
-router.post('/me', ensureAuthenticated(ROLE.USER), (req, res) => {
+router.post('/me', verifyToken, (req, res) => {
   if (req.query.action === USER_ACTIONS.RESET_PASSWORD) {
     //some code change password
     return res.status(200).json({
@@ -81,7 +78,8 @@ router.post('/me', ensureAuthenticated(ROLE.USER), (req, res) => {
 
 })
 
-router.get('/booked_tickets',ensureAuthenticated(ROLE.USER), (req, res) => {
+router.get('/booked_tickets',verifyToken, (req, res) => {
+  // console.log(req.user);
   DbService.getAllTicketsByEmail(req.user.email, (result) => {
     if(result) return res.status(200).json(result)
     return res.status(400).json({
@@ -108,27 +106,37 @@ router.get('/login/error', (req, res) => {
   })
 })
 
-router.post('/login', (req, res, next) => {
-  console.log("someone trynna logging in");
-  passport.authenticate('local', {
-    successRedirect: '/api/v1/user/me',
-    failureRedirect: '/api/v1/user/login/error',
-  })(req, res, next);
-});
+// router.post('/login', (req, res, next) => {
+//   console.log("someone trynna logging in");
+//   passport.authenticate('local', {
+//     successRedirect: '/api/v1/user/me',
+//     failureRedirect: '/api/v1/user/login/error',
+//   })(req, res, next);
+// });
 
 router.post('/m/login', (req, res, next) => {
   let { email, password} = req.body
-  console.log("someone trynna logging in");
   Client.findOne({
     email: email
   }).then(user => {
+    // email not existing
     if (!user) {
       return res.status(401).json({
         msg : 'unauthorized...'
       })
     }
-    uid = email;
-    return res.status(200).json(user)
+    // password is not correct
+    if(password !== user.password)
+      return res.status(401).json({
+        msg : 'unauthorized...'
+      })
+    // getting token
+    jwt.sign({ user }, 'secretkey', (err, token) => {
+      return res.status(200).send({
+        token
+      });
+    });
+    
   })
 });
 
@@ -139,7 +147,7 @@ router.get('/logout', (req, res) => {
   })
 });
 
-router.get('/tickets',async (req, res) =>{
+router.get('/tickets',verifyToken,async (req, res) =>{
          DbService.getAllTicketsByEmail('thanhhien2498@gmail.com',(result)=>{
             if(result) return res.status(200).json(result)
          })
@@ -149,7 +157,7 @@ router.get('/tickets',async (req, res) =>{
  
 })
 
-router.post('/review',ensureAuthenticated(ROLE.USER),(req, res) => {
+router.post('/review',verifyToken,(req, res) => {
   const {plate, stars} = req.body
   // console.log(`Yo`);
   let new_review =  new Review(req.body)
@@ -176,6 +184,23 @@ router.post('/review',ensureAuthenticated(ROLE.USER),(req, res) => {
   
 })
 
+function verifyToken(req, res, next) {
+  let token = req.query.jwt
+  if (typeof token !== 'undefined') {
+    jwt.verify(token, 'secretkey', (err, authData) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        req.user = authData.user
+        next()
+        // res.status(200).json(authData);
+      }
+    });
+  } else {
+    // Forbidden
+   return res.send("Your session is expried!");
+  }
+}
 
 
 

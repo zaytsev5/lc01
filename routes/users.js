@@ -176,16 +176,19 @@ router.post('/confirm',async (req,res) =>{
   
 })
 router.get('/allTickets',async (req, res) =>{
-  //console.log(req.user.email)
-  // UserMysql.findUserByEmail(req.user.email,(result)=>{
-     // if(result){
-       console.log("in");
-         UserMysql.getAllTicketsByEmail('thanhhien2498@gmail.com',(result)=>{
+  // console.log(req.user.email)
+  UserMysql.findUserByEmail(req.user.email,(result)=>{
+     if(result){
+      //  console.log("in");
+         UserMysql.getAllTicketsByEmail(req.user.email,(result)=>{
             if(result) return res.status(200).json(result)
          })
-    //  }
+     }
+     else return res.status(403).json({
+       msg: 'not authorized...'
+     })
         
- //  });
+  });
  
 })
 
@@ -326,7 +329,7 @@ router.post('/account/register', (req, res) => {
 router.post('/account/login', (req, res, next) => {
   console.log("loggin");
   passport.authenticate('local', {
-    successRedirect: '/api/v1/user/me',
+    successRedirect: '/home',
     failureRedirect: '/user/account#dangnhap',
     failureFlash: true
   })(req, res, next);

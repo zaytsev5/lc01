@@ -425,6 +425,7 @@ try{
   }catch(err){
     alert(`Có lỗi trong quá trình đật vé`)
   }
+  console.log('get thí far');
   event.target.disabled = false;
   
    // if(res.status == true) return console.log("OK")
