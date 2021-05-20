@@ -6,6 +6,8 @@ const session = require('express-session');
 const app = express();
 const path = require('path')
 const favicon = require('serve-favicon')
+const { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} = require('./config/auth');
+
 
 const errorHandler = require('./api/v1/helpers/error-handler')
 const routeAdmin = require('./routes/admin')
@@ -87,12 +89,60 @@ app.use('/api/v1',require('./api/v1/'))
 // app.use('/api/v1/admin',require('./api/v1/routes/admin'))
 app.use('/', require('./routes/index.js'));
 app.use('/user', routeUser);
-app.use('/admin', routeAdmin);
+app.use('/admin', ensureAuthenticatedForAdmin,routeAdmin);
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 
 //Route Admin
-
+app.get("/allusers",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/user");
+});
+app.get("/tablebenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableBenXe");
+});
+app.get("/tablexe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableXe");
+});
+app.get("/tabletuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableTuyenXe");
+});
+app.get("/tablechuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableChuyenXe");
+});
+app.get("/tablekhachhang",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableKhachHang");
+});
+app.get("/tablevexe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableVeXe");
+});
+app.get("/tablehoadon",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableHoaDon");
+});
+app.get("/editbenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/editBenXe");
+});
+app.get("/editxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/editXe");
+});
+app.get("/edittuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/editTuyenXe");
+});
+app.get("/editchuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/editChuyenXe");
+});
+app.get("/editkhachhang",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/editKhachHang");
+});
+app.get("/statistical",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/statistical");
+});
+app.get("/huyve",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/huyVeXe")
+});app.get("/duyetvehuy",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/DuyetVeHuy")
+});app.get("/doanhthu",ensureAuthenticatedForAdmin,function(req,res){
+  res.render("admin/tableDoanhThu")
+});
 
 API_BenXe(app);
 API_Xe(app);

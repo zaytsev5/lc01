@@ -24,7 +24,7 @@ require('../config/passport.conf')(passport);
 router.get('/account', forwardAuthenticated, (req, res) => res.render('register',{title:"ticketMe| Tài khoản"}));
 
 router.get('/me',ensureAuthenticatedForUser, (req,res) =>{
-
+console.log(req.user);
   res.render('account',{
     user: req.user
   })

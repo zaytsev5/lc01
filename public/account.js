@@ -5,6 +5,25 @@ $('#contact').click(()=>{
   })
 })
 
+$('#user-avt').mouseover(()=>{
+  $('#user-avt').css({opacity: 0.5})
+  console.log('ok');
+}).mouseout(()=>{
+  $('#user-avt').css({opacity: 1})
+  console.log('ok');
+}).click(() =>{
+  document.getElementById('file-avt').click();
+})
+
+
+const input = document.querySelector('#file-avt')
+input.addEventListener('change',() =>{
+  document.querySelector('#form-avatar').submit()
+})
+
+
+
+
 const tableTicket = `<table class="table">
   <thead class="thead-light">
     <tr>

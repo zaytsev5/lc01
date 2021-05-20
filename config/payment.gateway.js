@@ -17,7 +17,7 @@ module.exports = {
               "payment_method": "paypal"
           },
           "redirect_urls": {
-              "return_url": "http://localhost:5000/api/v1/payment?method=paypal&status=true",
+              "return_url": "http://localhost:5000/success",
               "cancel_url": "http://localhost:5000/cancel"
           },
           "transactions": [{
@@ -112,7 +112,7 @@ sendMailToCus: function (res,req,customer){
 },
 checkSeatAgain:function(customer,UserMysql){
   return new Promise(resolve => {
-    UserMysql.findSeat(customer.MaCX,(result) =>{
+    UserMysql.findSeatsBooked(customer.MaCX,(result) =>{
       if(result){
         for(let i in result){
           for(let k in customer.SLGhe){

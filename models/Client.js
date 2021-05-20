@@ -20,6 +20,10 @@ const ClientSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  avt:{
+    type: String,
+    default : 'https://cdn0.iconfinder.com/data/icons/education-flat-7/128/17_Scholl_Bus-512.png'
   }
 
 });

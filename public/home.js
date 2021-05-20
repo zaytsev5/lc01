@@ -7,6 +7,7 @@ $('#contact').click(()=>{
   })
 })
 
+
   //initzalize variables
   const source = document.querySelector('#source')
   const findButton = document.querySelector('#findBtn')
@@ -118,7 +119,7 @@ new Glide('.glide', {
   hoverpause: true,
   gap: 0,
   // animationTimingFunc: ease,
-  perView: 3
+  perView: 4
   
 }).mount();
 

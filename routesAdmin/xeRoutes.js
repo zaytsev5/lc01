@@ -1,6 +1,5 @@
 'use strict';
 module.exports = function(app) {
-   var { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} = require('../config/auth');
    var todoList = require('../controllers/xeControllers');
    var db=require('../modelsAdmin/db.js');
 	
@@ -25,7 +24,7 @@ module.exports = function(app) {
        .post(todoList.createXe);
 
    app.route('/xe/:BienSoXe')
-       .get(ensureAuthenticatedForAdmin,todoList.getXeById)
+       .get(todoList.getXeById)
        .put(todoList.updateXeById)
        .delete(todoList.deleteXeById);
 };

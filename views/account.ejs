@@ -42,7 +42,7 @@
       <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
-          <img src="https://cdn0.iconfinder.com/data/icons/education-flat-7/128/17_Scholl_Bus-512.png" class="img-responsive" alt="">
+          <img id="user-avt" src="<%= user.avt %>" class="img-responsive" alt="">
         </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->
@@ -152,8 +152,18 @@
   
 
 <!-- container -->
+<form action="/api/v1/user/avt" id="form-avatar" method="post" enctype="multipart/form-data">
+  <input type="file" id="file-avt" name="image" style="display: none;"><br><br>
+</form>
    
 </div>
+<style>
+  #form-avatar{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+</style>
  <% include ./partials/footer %>
  <link rel="stylesheet" href="/account.css">
  <script src="/validation.js"></script>
@@ -163,3 +173,6 @@
 
 
 </html>
+
+
+

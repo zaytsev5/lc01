@@ -281,3 +281,42 @@ input {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.selectbox {
+  position: relative;
+  /* font-size: 20px; */
+  height: 50px;
+  width: 200px;
+ 
+
+}
+.selectbox #gender{
+  font-size: 15px;
+  color: grey;
+}
+
+.selectbox::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  margin-top: -6px;
+  right: .7rem;
+  width: 0;
+  height: 0;
+ 
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+}
+
+#gender {
+ border: 1px solid #EEE;
+  border-radius: .25rem;
+  padding: 15px 1.5rem 15px .5rem;
+  display: flex;
+  background-color: white;
+  outline: 0;
+  cursor: pointer;
+  appearance: none;
+}

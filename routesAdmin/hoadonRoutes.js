@@ -5,5 +5,6 @@ module.exports = function(app) {
    app.route('/hoadon')
        .get(todoList.getAllHoaDon);
 
-	
+    app.route('/hoadon/:NgayDat')
+        .get(todoList.getDoanhThu);
 };

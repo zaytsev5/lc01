@@ -92,10 +92,33 @@
                             <input  id="phone" type="text" value="<%= typeof userInfo != 'undefined' ? userInfo.SDT : '' %>" class="input-1" onfocus="setFocus(true)" onblur="setFocus(false)" />
                           </div>
                         
-                          <div class="input-box">
+                          <!-- <div class="input-box">
                             <label class="input-label">Giới tính</label>
                             <input  id="gender" type="text" value="<%= typeof userInfo != 'undefined' ? userInfo.GioiTinh : '' %>" class="input-1" onfocus="setFocus(true)" onblur="setFocus(false)" />
-                          </div>
+                          </div> -->
+                          <div class="selectbox">
+                            <% if(typeof userInfo != 'undefined' && userInfo.gender == "Nam"){ %>
+                           
+                              <select name="" id="gender">
+                             
+                                <option value="Nam" selected>Nam</option>
+                              </select>
+                           <% } else if(typeof userInfo != 'undefined' && userInfo.gender == "Nữ"){%>
+
+                             
+                            <select name="" id="gender">
+                             
+                              <option value="Nữ" selected>Nữ</option>
+                            </select>
+
+                           <% }else{%>
+                            <select name="" id="gender">
+                                <option value="">Giới tính</option>
+                                <option value="Nam" >Nam</option>
+                                <option value="Nữ" >Nữ</option>
+                            </select>
+                            <%}%>
+                           </div>
                           <div class="input-box">
                             <label class="input-label">Địa chỉ</label>
                             <input  id="address" type="text" value="<%= typeof userInfo != 'undefined' ? userInfo.DiaChi : '' %>" class="input-1" onfocus="setFocus(true)" onblur="setFocus(false)" />
@@ -140,6 +163,7 @@ const input = document.querySelectorAll('.input-box');
 console.log(input[0].getElementsByTagName('input')[0].value)
 
 if(input[0].getElementsByTagName('input')[0].value.length > 0){
+  
   input.forEach((i) =>{
       i.classList.add('active');
       i.getElementsByTagName('input')[0].disabled = true;

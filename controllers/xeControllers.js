@@ -49,7 +49,7 @@ exports.getXeByMaBX = function(req, res) {
 };
 
 exports.updateXeById = function(req, res) {
-    Xe.updateXeById(req.params.BienSoXe, new Xe(req.body), function(err,xe) {
+    Xe.updateXeById(req.body, function(err,xe) {
         if (err)
             res.send(err);
         res.json(xe);

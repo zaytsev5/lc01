@@ -110,7 +110,10 @@ module.exports = {
  	let query = 'INSERT INTO `khachhang`(`Email`, `TenKH`, `SDT`, `GioiTinh`, `DiaChi`) VALUES (?,?,?,?,?)'
  	let not = false
  	mysqlDB.query(query,bind,(err,result) =>{
- 		if(err) return callback(not)
+ 		if(err) {
+			 console.log(err.message);
+			return callback(not)
+		 }
  		callback(result)
  	})
  },
@@ -233,11 +236,10 @@ module.exports = {
  			callback(result)
  	})
  },
- updateCus:function(cusId,email,callback){
+ updateCus:function(email,callback){
  	let query = 'update `khachhang` set `Email` = ? where `CMND` =?'
  	let bind=[];
- 	bind.push(email);
- 	bind.push(cusId);	
+ 	bind.push(email);	
  	mysqlDB.query(query,bind,(err, result) =>{
  		if(err) return callback(false)
  			callback(result)

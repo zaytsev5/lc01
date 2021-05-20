@@ -42,7 +42,6 @@ router.get('/booking/tickets',(req,res) =>{
 
 router.post('/customer/insert',async (req, res) =>{
   // return doPayment(req,res)
-  const {CMND,TenKH,Email,SDT,GioiTinh,DiaChi} = req.body;
   if(req.body){
     const {TenKH,Email,SDT,GioiTinh,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
     customer = req.body;

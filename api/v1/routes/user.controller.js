@@ -9,6 +9,8 @@ const Review = require('../../../models/Review')
 const USER_ACTIONS = require('../helpers/user.actions')
 const ROLE = require('../helpers/role')
 const DbService = require('../services/database.service')
+const upload = require('../utils/multer')
+const cloudinary = require('../utils/cloudinary')
 
 require('../../../config/passport.conf')(passport);
 
@@ -115,6 +117,7 @@ router.get('/login/error', (req, res) => {
 // });
 
 router.post('/m/login', (req, res, next) => {
+  console.log('you are logging in');
   let { email, password} = req.body
   Client.findOne({
     email: email
@@ -132,9 +135,7 @@ router.post('/m/login', (req, res, next) => {
       })
     // getting token
     jwt.sign({ user }, 'secretkey', (err, token) => {
-      return res.status(200).send({
-        token
-      });
+      return res.status(200).json(token);
     });
     
   })
@@ -157,17 +158,30 @@ router.get('/tickets',verifyToken,async (req, res) =>{
  
 })
 
+router.post('/avt',upload.single("image"),async(req, res) => {
+  try {
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+    Client.updateOne({'email': 'shinminah357159@gmail.com'},{$set: { 'avt' : result.secure_url}},(err, rs) =>{
+      if(err) return res.status(400).json({error:err.message})
+      return res.redirect('/user/me')
+    })
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 router.post('/review',verifyToken,(req, res) => {
-  const {plate, stars} = req.body
+  // const {plate,date_go,trip_id, stars, times} = req.body
   // console.log(`Yo`);
   let new_review =  new Review(req.body)
 
   Review.findOne({
-    plate: req.body.plate
+    trip_id: req.body.trip_id
   }).then((rs, err) => {
     if(err) return res.status(400).json({msg: 'failed to request..'})
     if(rs){
-      Review.updateOne({'plate': plate},{$set: { 'times' : rs.times + 1,'stars': rs.stars + stars}},(err, rs) =>{
+      Review.updateOne({'trip_id': req.body.trip_id},{$set: { 'times' : rs.times + 1,'stars': rs.stars + req.body.stars}},(err, rs) =>{
         if(err) return res.status(400).json({error:err.message})
         return res.status(200).json({msg:'reviewed successfully...'})
       })
@@ -182,6 +196,15 @@ router.post('/review',verifyToken,(req, res) => {
     }
   })
   
+})
+
+router.post('/profile',(req, res) =>{
+  DbService.updateCus(req.body.email,req.body, (result) => {
+    if(result){
+      return res.status(200).json({msg: 'updated successfully...'})
+    }
+    res.status(202).json({msg: 'cannot update...'})
+  })
 })
 
 function verifyToken(req, res, next) {

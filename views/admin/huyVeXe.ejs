@@ -4,11 +4,11 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:5000/img/bus-icon.png">
-  <link rel="icon" type="image/png" href="http://localhost:5000/img/busfavicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:5000/admin/img/bus-icon.png">
+  <link rel="icon" type="image/png" href="http://localhost:5000/admin/img/busfavicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Quản lí vé xe | Edit data
+    Quản lí vé xe | Chỉnh sửa dữ liệu
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -16,47 +16,42 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="admin/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-  <link type="text/css" rel="stylesheet" href="admin/edit-field.css" />
+  <link type="text/css" rel="stylesheet" href="admin/edit.css" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="http://localhost:5000/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="http://localhost:5000/admin/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="#" class="simple-text logo-normal">
-          BUSEXPRESS
+      <div class="logo"><a href="/home" class="simple-text logo-normal">
+        Bus Express
         </a></div>
      <div class="sidebar-wrapper">
         <ul class="nav">
+          
           <li class="nav-item">
             <a class="nav-link" href="/allusers">
-              <i class="material-icons">person</i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/tablebenxe">
               <i class="material-icons">content_paste</i>
-              <p>Table List</p>
+              <p>Danh Sách Bảng</p>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/editbenxe">
+            <a class="nav-link" href="/editxe">
               <i class="material-icons">create</i>
-              <p>Edit</p>
+              <p>Chỉnh Sửa</p>
             </a>
           </li>
           
           <li class="nav-item active">
             <a class="nav-link" href="/huyve">
               <i class="material-icons">delete</i>
-              <p>Remove Ticket</p>
+              <p>Hủy Vé</p>
             </a>
           </li>
           
@@ -68,7 +63,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Edit</a>
+            <a class="navbar-brand" href="javascript:;">Hủy Vé</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -79,7 +74,7 @@
           <div class="collapse navbar-collapse justify-content-end">
             <form class="navbar-form">
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
+                <input type="text" value="" class="form-control" placeholder="Tìm kiếm...">
                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                   <i class="material-icons">search</i>
                   <div class="ripple-container"></div>
@@ -122,53 +117,60 @@
       </nav>
       <!-- End Navbar -->
      <!--chose table--> 
-    <div id="title-panel-chosetask">Chose Task</div>
-  <div class="panel-chosetask">
-    <table width="450px">
+    
+  <div class="panel-chosetable">
+    <table width="980px">
       <tr>
         <td>
           <a href="/huyve">
-            <p class="item-chose-task">Huỷ Vé</p>
+            <p class="item-chose-table-active">Huỷ Vé</p>
           </a>
         </td>
         <td>
           <a href="/duyetvehuy">
-            <p class="item-chose-task">Duyệt Vé Hủy</p>
+            <p class="item-chose-table">Duyệt Vé Hủy</p>
           </a>
         </td>
       </tr>
     </table>
   </div>
    <!--insert data-->
-   <div id="title-panel-insert">Insert Data</div>
-   <div align="center" class="panel-insert-huyve">
-    <form>
-    <table height="300px" width="500px"  border="0" cellspacing="0">
+  
+   <div align="center" class="panel-insert">
+  
+    <table height="350px" width="800px"  border="0" cellspacing="0">
       <tr>
-        <td>Mã Vé Xe</td>
-        <td><input class="HuyVe" id="MaVeXe-HuyVe" style="width: 300px;" type="text"/></td>
+        <td style="padding-right: 40px;" align="right" width="300px">Mã Vé Xe</td>
+        <td>
+          <input class="HuyVe" id="MaVeXe-HuyVe" style="width: 400px;" type="text"/>
+        </td>
       </tr>
       <tr>
-        <td>Số Tài Khoản</td>
-        <td><input class="HuyVe" id="STK" style="width: 300px;" type="text"/></td>
+        <td style="padding-right: 40px;" align="right">Số Tài Khoản</td>
+        <td><input class="HuyVe" id="STK" style="width: 400px;" type="text"/></td>
+      </tr>
+      <tr align="center">
+        <td colspan="2">
+          <button class="btn" id="buttonDeleteVeHuy" onclick="handleDestroyTicket()" >Xóa</button>
+        </td>
+        
       </tr>
     </table>
-    </form>
+    
   </div>
   
   
   
    <!-- display data-->
-    <div id="title-table-data">Vé hủy hôm nay</div>
+    
         
           
-    <div class="div-table-huyve">
-    <div class="divtable" style="height:450px">
+    <div class="div-table">
+    <div class="divtable" style="height:700px">
       <form>
-        <table id="table-vexehuy" width="700px" height="20px" border="0" cellspacing="0">
-          <tr>
+        <table id="table-vexehuy" width="930px"  border="1" cellspacing="0">
+          <tr height="50px" style="background-color: #3256a4;color: white;">
             <td>STT</td>
-
             <td>MaVeXe</td>
             <td>Email</td>
             <td>STK</td>
@@ -176,19 +178,18 @@
             <td>NgayHuy</td>
             <td>TinhTrang</td>
           </tr>
+         
+          
         </table>
       </form>
     </div>
     </div>  
     <!-- BUTTON-->
-    <div id="div-button">
      
-      <button class="button-update" id="buttonDeleteVeHuy" onclick="handleDestroyTicket()" type="submit">Huỷ vé</button>
-    </div> 
     
     
     
-  <div class="fixed-plugin">ß
+  <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
       <a href="#" data-toggle="dropdown">
         <i class="fa fa-cog fa-2x"> </i>
@@ -211,22 +212,22 @@
         <li class="header-title">Images</li>
         <li class="active">
           <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="http://localhost:5000/img/sidebar-1.jpg" alt="">
+            <img src="http://localhost:5000/admin/img/sidebar-1.jpg" alt="">
           </a>
         </li>
         <li>
           <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="http://localhost:5000/img/sidebar-2.jpg" alt="">
+            <img src="http://localhost:5000/admin/img/sidebar-2.jpg" alt="">
           </a>
         </li>
         <li>
           <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="http://localhost:5000/img/sidebar-3.jpg" alt="">
+            <img src="http://localhost:5000/admin/img/sidebar-3.jpg" alt="">
           </a>
         </li>
         <li>
           <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="http://localhost:5000/img/sidebar-4.jpg" alt="">
+            <img src="http://localhost:5000/admin/img/sidebar-4.jpg" alt="">
           </a>
         </li>
         

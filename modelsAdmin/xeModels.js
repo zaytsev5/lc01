@@ -10,7 +10,7 @@ var Xe = function(xe){
 	this.MaBX = xe.MaBX;
 };
 Xe.createXe = function createUser(newXe, result) {
-    sql.query("INSERT INTO xe set ?", newXe, function (err, res) {
+    sql.query("INSERT INTO `xe`(`BienSoXe`, `LoaiXe`, `SoChoNgoi`) VALUES (?,?,30,?)", newXe, function (err, res) {
 
         if(err) {
             console.log("error: ", err);
@@ -60,8 +60,8 @@ Xe.getAllXe = function getAllXe(result) {
         }
     });
 };
-Xe.updateXeById = function(BienSoXe, xe, result){
-    sql.query("UPDATE xe SET  LoaiXe= ?, SoChoNgoi= ?, MaBX= ? WHERE BienSoXe = ?", [xe.LoaiXe,xe.SoChoNgoi,xe.MaBX,BienSoXe], function (err, res) {
+Xe.updateXeById = function(xe, result){
+    sql.query("UPDATE xe SET  LoaiXe= ?, SoLuongGhe= ? WHERE BienSoXe = ?", [xe.LoaiXe,xe.SoLuongGhe,xe.BienSoXe], function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);

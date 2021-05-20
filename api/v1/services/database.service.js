@@ -241,11 +241,13 @@ module.exports = {
  			callback(result)
  	})
  },
- updateCus:function(cusId,email,callback){
- 	let query = 'update `khachhang` set `Email` = ? where `CMND` =?'
+ updateCus:function(email,cus,callback){
+ 	let query = 'update `khachhang` set `TenKH` = ?, `SDT`= ?, `DiaChi`= ? where `Email` =?'
  	let bind=[];
+	bind.push(cus.TenKH)
+	bind.push(cus.SDT)
+	bind.push(cus.DiaChi)
  	bind.push(email);
- 	bind.push(cusId);	
  	mysqlDB.query(query,bind,(err, result) =>{
  		if(err) return callback(false)
  			callback(result)

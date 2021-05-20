@@ -383,6 +383,20 @@ try{
 
     const post = await fetch(`http://localhost:5000/getPostDetails/${postSelected}`)
     const postDetails = await post.json();
+    console.log({
+      'TenKH':$('#name').val(),
+      'Email':$('#email').val(),
+      'SDT': $('#phone').val(),
+      'GioiTinh': $('#gender').val(),
+      'DiaChi': $('#address').val(),
+      'SLGhe' :tickets,
+      'DonGia':price,
+      'NgayDat': formatDate(),
+      "MaCX":postSelected,
+      "ChuyenXe":postName(),
+      "BienSoXe":postDetails[0].BienSoXe
+
+    });
   
  fetch('http://localhost:5000/customer/insert',{
         method: 'POST',

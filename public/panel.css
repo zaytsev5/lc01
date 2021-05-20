@@ -6,7 +6,7 @@
   --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
 }
 body{
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   
   margin: 0px;
   font-size: 13px;
@@ -71,7 +71,7 @@ option:focus{
   }
 }
 button{
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 
 }
 .upper-case{
@@ -85,8 +85,8 @@ button{
   left: 0;
 
   height: 50px;
-  background-color: #3256a4;
-  color:white;
+  background-color: white;
+  color:black;
   line-height: 50px;
   position: fixed;
   z-index: 1000;
@@ -101,32 +101,33 @@ button{
 .header .logo-brand {
   font-size: 27px;
   margin-left:70px;
-  font-family: 'Lato', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .logo-brand img{
   text-align: center;
 }
 .control-panel .nav-bar ul{
   position: absolute;
-  left: 45%;
+  left: 35%;
   top:-35%;
   display: grid;
   grid-gap: 10px;
   padding: 5px 0;
   list-style: none;
-  grid-template-columns: repeat(4 ,100px);
+  grid-template-columns: repeat(4 ,150px);
 }
 .control-panel .nav-bar li:hover{
-  color:var(--main);
+  color:#3256a4;
 }
 .control-panel .nav-bar li{
-
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
 
 }
- .control-panel  .header ul a:hover{
-  color: var(--main);
+ .control-panel  .header ul li:hover{
+  color: #3256A4;
+  cursor: pointer;
 }
 .control-panel .action ul{
 
@@ -137,7 +138,7 @@ button{
   grid-gap: 10px;
   padding: 0px 0;
   list-style: none;
-  grid-template-columns: 60px 100px;
+  grid-template-columns: 80px 120px;
   grid-template-rows: 40px;
 
 
@@ -146,21 +147,24 @@ button{
 }
 
 .control-panel  .header .nav-bar ul a{
-  color: white;
+  color: black;
 }
 .control-panel  .header  ul a{
-
+  cursor: pointer;
   text-decoration: none;
   text-align: center;
   /*pointer-events: unset;*/
    /*border: 1px solid #f0f4f7;*/
 }
+.control-panel  .header  ul a:hover{
+  color: #3256A4;
+}
 #contact{
-  cursor: pointer;
+  font-weight: 500;
+  border: 1px solid rgb(192,192,192);
+  border-radius: 5px;
 }
-#contact:hover{
-  color:var(--main);
-}
+
 .dropdown a:nth-child(odd){
   text-align: right;
 }
@@ -169,6 +173,15 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#sign-in{
+  /* border: 1px solid black; */
+  background-color: #3256a4;
+  border-radius: 3px;
+} 
+#sign-in a{
+  color: white;
+
 }
 
 .search-box{
@@ -217,7 +230,7 @@ button{
   border:none;
   border-radius: 1px;
   margin-right: 20px;
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .search-box p{
   color: white;
@@ -237,9 +250,8 @@ button{
   margin-top:200px;
   grid-template-columns: repeat(4,1fr);
   grid-gap: 20px;
-  background:#3256a4;
+  background:#3256A4;
   padding:50px;
-  opacity:0.9;
   
 }
 .search-box  button{
@@ -250,7 +262,7 @@ button{
   border: none;
   border-radius: 2px;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   cursor: pointer;
   z-index: 10;
 
@@ -279,7 +291,7 @@ button{
   }
 }
 .search option{
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
    
 
 }
@@ -295,10 +307,10 @@ button{
    background-image: none;
    flex: 1;
    padding: 0 .5em;
-   color:black;
+   color:grey;
    cursor:pointer;
    font-size: 15px;
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 
    
 }
@@ -614,7 +626,7 @@ svg{
       text-align: center;
     }
     .user-advantage .card .fas{
-      padding: 30px;
+      padding: 20px;
       color: white;
       background: #3256a4;
       border-radius: 50%;
@@ -654,10 +666,10 @@ svg{
   border-radius: 50%;
 }*/
   .dropbtn {
-  padding: 7px 12px;
-  border:1px solid #ffffff;;
+  padding: 12px 23px;
+  border:1px solid black;;
   border-radius: 30px;
-  color: white;
+  color: black;
 
   }
   .dropbtn::after{
