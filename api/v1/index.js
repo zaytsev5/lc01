@@ -1,8 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const fetch = require('node-fetch')
 const router = express.Router();
 const paypal = require('paypal-rest-sdk')
+const emailExistence = require('email-existence')
+const Client = require('../../models/Client')
+const nodemailer = require('nodemailer')
+const {doPayment, sendMailToCus,finalCheckSeatStatus, doPaymentM} = require('../v1/services/payment.service');
+
+
+
 // const { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} = require('../config/auth');
 // const User = require('../models/User');
 // const DbService = require('../models/DbService');
@@ -124,11 +131,11 @@ router.get('/ticket/check',(req, res) => {
   })
 })
 
-router.post('/customer/insert',async (req, res) =>{
+router.post('/m/pay',async (req, res) =>{
   // return PmService.doPayment(req,res)
   if(req.body){
-    const {TenKH,Email,SDT,GioiTinh,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
-    customer = req.body;
+    const {SDT,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
+    // customer = req.body;
     console.log(MaCX)
     let bind = [];
     bind.push(Email) 
@@ -162,18 +169,18 @@ router.post('/customer/insert',async (req, res) =>{
              DbService.findCusByEmail(Email, async (result)=>{
               if(result.length > 0){
                  console.log("[👋]-customer exist")
-                 customer.Email = result[0].Email;
-                 customer.TenKH = result[0].TenKH;
-                 customer.SDT = result[0].SDT;
-                 customer.DiaChi = result[0].DiaChi;
-                 customer.GioiTinh = result[0].GioiTinh;
-                 console.log(customer)
+                 req.body.Email = result[0].Email;
+                 req.body.TenKH = result[0].TenKH;
+                 req.body.SDT = result[0].SDT;
+                 req.body.DiaChi = result[0].DiaChi;
+                 req.body.GioiTinh = result[0].GioiTinh;
+                 console.log(req.body)
                  PmService.doPayment(req,res)
 
                 
                
               }else{
-                  console.log("[👋]-customer doesnt exist")
+                  console.log("[👋]-req.body doesnt exist")
                     DbService.save(bind,(result)=>{
                         if(result) {
                           PmService.doPayment(req,res)                       
@@ -194,61 +201,152 @@ router.post('/customer/insert',async (req, res) =>{
   }
 });
 
-router.get('/success',async  (req, res) => {
-  console.log(customer)
-  const payerId = req.query.PayerID;
-  const paymentId = req.query.paymentId;
-  if(customer == null) return res.redirect('home');
 
-    let bind=[];
-    const isMatched = await checkSeatAgain(customer,DbService);
-    if(isMatched) return res.render("failed")
+router.post('/m/register', (req, res) => {
+  console.log("processing...");
+  const { name, email, password, password2 } = req.body;
+  const role = "user";
+  let cash = 0;
 
-      for(let i = 0 ;i < customer.SLGhe.length ; i++){
-          console.log(i)
-           bind = []
-          bind.push(customer.MaCX + customer.SLGhe[i]);
-          bind.push(customer.MaCX);
-          bind.push(customer.SLGhe[i]);
-           DbService.saveTicket(bind,(result)=>{
-            if(result){
-              bind= [];
-              bind.push(customer.MaCX + customer.SLGhe[i] )
-              bind.push(customer.Email)
-              bind.push(customer.NgayDat);
+  if (!name || !email ){
+            return   res.status(401).json({
+              msg: 'wrong crendentials.'
+            })
+  }
 
-               DbService.saveBillTicket(bind,(result)=>{
-                if(result){
-                  // DbService.updateTickets(1,customer.MaCX,(result)=>{
-                  //     if(result) {
-                  //       // tickets.push(customer.MaCX + SLGhe[i]);
-                  //       console.log("updated")
-                  //       if(i == customer.SLGhe.length - 1){
-                  //         sendMailToCus(res,req,customer)
-                  //       }
-                  //     }
-                  //       else res.status(204).send({status:false})
-                  //  })
-                  if(i == customer.SLGhe.length - 1){
-                    sendMailToCus(res,req,customer)
-                  }
-                }
-                else res.status(204).send({status:false})
+  if (password !== password2 ){
+    return   res.status(401).json({
+      msg: 'wrong crendentials.'
+    })
+ }
 
+
+    console.log(email)
+     emailExistence.check(email, function(error, response){
+        if(error) return console.log(error)
+          console.log(response)
+        if(response){
+          Client.findOne({ email: email }).then(user => {
+            if (user) {
+              return   res.status(401).json({
+                msg: 'wrong crendentials.'
               })
-            }else{
-              return  res.send({status:false})
+              
+            } else {
+              const newClient = new Client({
+                name,
+                email,
+                password,
+                role,
+                cash
 
+              });
+
+              // bcrypt.genSalt(10, (err, salt) => {
+              
+                newClient
+                    .save()
+                    .then(user => {
+                      return   res.status(200).json(user)
+                    })
+                    .catch(err => console.log(err));
+              // });
             }
-
+          });
+        }else{
+          return   res.status(401).json({
+            msg: 'wrong crendentials.'
           })
         }
-        // const sendmail = await sendMailToCus();
-        res.render('verified');
+    });
+   
+  
+});
+
+
+
+
+
+// router.post('/confirm',async (req,res) =>{
+//   console.log(req.body.email)
+//     User.updateOne({'email' : req.body.email},{$set: { 'password' : req.body.password}},(err,result)=>{
+//         if(err) return res.send({isChanged:false})
+//             console.log("done")
+            
+//         return res.send({isChanged:true})
+//     });
+    
+  
+// })
+
+router.post('/m/forgot',async (req,res) =>{
+  console.log(req.body.email)
+  Client.findOne({email:req.body.email}).then( user =>{
+    if(!user){
+      return res.status(401).json({msg: 'email doesnt exist.'})
+    }
+    Client.updateOne({'email' : req.body.email},{$set: { 'password' : '12345678'}},(err,result)=>{
+      if(err)  return res.status(401).json({msg: 'something wrong'})
+      
+      const output = `
+        <p>Thông báo thay đổi mật khẩu</p>
+        <h3>BusExpress</h3>
+        <ul>  
+          <li>From: BusExpress</li>
+          <li>Email: shinminah357159@gmail.com</li>
+          <li>Phone: 190012536</li>
+          <li><strong>Default code:</strong>12345678</li>
+
+        </ul>
+        `;
+
+  // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: 'shinminah357159@gmail.com', // generated ethereal user
+            pass: '01649254108'  // generated ethereal password
+        },
+        tls:{
+          rejectUnauthorized:false
+        }
+      });
+
+  // setup email data with unicode symbols
+      let mailOptions = {
+          from: '"Freelancer.com" <shinminah357159@email.com>', // sender address
+          to: req.body.email, // list of receivers
+          subject: 'BookYourBus', // Subject line
+          text: 'Hello world?', // plain text body
+          html: output // html body
+      };
+
+  // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return res.status(400).json({msg:error.message})
+          }
+          console.log('Message sent: %s', info.messageId);   
+          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+          console.log('Sent!')
+          res.status(200).json({msg: 'OK'})
+      });
+    });
+      
+  // console.log(req.body.email)
+  });
+
+  
+})
+
+router.post('/m/success',async  (req, res) => {
+  // console.log(JSON.parse(req.body.SLGhe));
+   doPaymentM(req, res)
 //     }
 // });
 });
-
 
 
 

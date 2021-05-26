@@ -65,7 +65,7 @@ sendMailToCus: function (res,req,customer){
           <li>From: Bus Express</li>
           <li>Email: buexpressbusiness@gmail.com</li>
           <li>Hot line: 19000153157</li>
-          <li>Chuyến xe:${customer.ChuyenXe}</li>
+          <li>Chuyến xe:${customer.M}</li>
           <li>Đi ngày:${new Date(result[0].NgayDi).toLocaleDateString()}</li>
           <li>Số Ghế:${customer.SLGhe.toString()}</li>
           <li>Xe:${customer.BienSoXe}</li>        

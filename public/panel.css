@@ -138,7 +138,7 @@ button{
   grid-gap: 10px;
   padding: 0px 0;
   list-style: none;
-  grid-template-columns: 80px 120px;
+  grid-template-columns: 90px 150px;
   grid-template-rows: 40px;
 
 
@@ -660,25 +660,10 @@ svg{
     .main{
       color:var(--main);
     }
-  /*.fa-user{
-  background: red;
-  padding: 5px 5px;
-  border-radius: 50%;
-}*/
-  .dropbtn {
-  padding: 12px 23px;
-  border:1px solid black;;
-  border-radius: 30px;
-  color: black;
-
-  }
-  .dropbtn::after{
-   content: ' xin chào!';
-  }
-
+ 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
   line-height: 40px;
   
 }
@@ -686,11 +671,30 @@ svg{
   background: gray;
   
 }
+.dropbtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dropbtn .user-display-name{
+  max-width: 90px;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-x: hidden;
+}
+.dropbtn img{
+  border-radius:50% ;
+}
+.dropbtn a{
+  color: black;
+}
 
 .dropdown-content {
   display: none;
   position: absolute;
-    color: #3256a4;
+  top:40px;
+  color: #3256a4;
   background-color:white ;
   min-width: 120px;
   height: 80px;
@@ -701,7 +705,8 @@ svg{
 
 }
 .header.dropdown-content a{
-  color: #3256a4;
+  /* color: #3256a4; */
+  cursor: pointer;
 }
 .selected{
   background: var(--main);
@@ -722,10 +727,12 @@ button,input,select,option{
 
 
 .dropdown-content a {
-  color: #3256a4;
+  /* color: #3256a4; */
   text-decoration: none;
+  color:black;
   display: block;
   text-align: center;
+  cursor: pointer;
 }
 
 .dropdown-content a:hover {background-color: white;}

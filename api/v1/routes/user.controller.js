@@ -11,6 +11,8 @@ const ROLE = require('../helpers/role')
 const DbService = require('../services/database.service')
 const upload = require('../utils/multer')
 const cloudinary = require('../utils/cloudinary')
+const {doPayment, sendMailToCus,finalCheckSeatStatus, doPaymentM} = require('../services/payment.service');
+
 
 require('../../../config/passport.conf')(passport);
 
@@ -36,7 +38,10 @@ router.get('/set_approved', ensureAuthenticated(ROLE.ADMIN), (req, res) => {
 })
 
 router.get('/me',verifyToken, (req, res) => {
-  res.status(200).json(req.user)
+  
+      res.status(200).json({user: req.user})
+  
+ 
 })
 
 router.post('/register',(req, res) =>{
@@ -44,9 +49,12 @@ router.post('/register',(req, res) =>{
   Client.findOne({
     email: new_client.email
   }).then(user => {
-    user
-    ? res.status(400).json({message: 'email is being used, please use another...'})
-    : new_client.save()
+    if(user){
+      console.log('existing...');
+     res.status(400).json({message: 'email is being used, please use another...'})
+
+    }
+    else new_client.save()
       .then((rs, err) => {
         if(err)
           return res.status(400).json({
@@ -119,11 +127,13 @@ router.get('/login/error', (req, res) => {
 router.post('/m/login', (req, res, next) => {
   console.log('you are logging in');
   let { email, password} = req.body
+  console.log(req.body);
   Client.findOne({
     email: email
   }).then(user => {
     // email not existing
     if (!user) {
+      console.log('wrong');
       return res.status(401).json({
         msg : 'unauthorized...'
       })
@@ -135,7 +145,16 @@ router.post('/m/login', (req, res, next) => {
       })
     // getting token
     jwt.sign({ user }, 'secretkey', (err, token) => {
-      return res.status(200).json(token);
+      if(err)  return res.status(200).json({token});
+      DbService.getInfoUser(user.email,(result) => {
+        if (result) {
+          return res.status(200).json({
+            token: token,
+            info: result[0] ||{} 
+          })
+        }  res.status(400).json({msg: 'failed'})
+      })
+     
     });
     
   })
@@ -148,11 +167,12 @@ router.get('/logout', (req, res) => {
   })
 });
 
-router.get('/tickets',verifyToken,async (req, res) =>{
-         DbService.getAllTicketsByEmail('thanhhien2498@gmail.com',(result)=>{
+router.get('/tickets',async (req, res) =>{
+  console.log('getting tickets...');
+         DbService.getAllTicketsByEmail(req.query.email,(result)=>{
             if(result) return res.status(200).json(result)
          })
-    //  }
+    //  k}
         
  //  });
  
@@ -207,6 +227,50 @@ router.post('/profile',(req, res) =>{
   })
 })
 
+router.post('/m/pay', async (req, res) => {
+  console.log(req.body);
+ // console.log(req.user);
+  // console.log(JSON.parse(req.body.SLGhe));
+  const { SDT, DiaChi, SLGhe, DonGia, NgayDat, MaCX } = req.body;
+  DbService.findCusByEmail(req.body.Email, (result) => {
+    console.log(result);
+    if (result.length == 0) {
+      console.log('first time booked...');
+      let bind = [req.body.Email, req.body.TenKH, req.body.SDT, req.body.GioiTinh, req.body.DiaChi]
+      DbService.save(bind, (rs) => {
+        if (rs) {
+          return doPaymentM(req, res)
+        }
+        res.status(400).json({msg :'failed'})
+        
+      })
+    } else {
+      console.log('me 2');
+      DbService.updateCus(req.body.Email, req.body, (result) => {
+        if (result) {
+          console.log('have booked...');
+          // console.log('mesdas', result);
+          console.log('update');
+          return doPaymentM(req, res)
+          // return res.status(200).json({msg:'ok'})
+
+        }
+        res.status(400).json({ msg: 'not ok' })
+      })
+    }
+  })
+
+
+  // Client.updateOne({'email': req.body.trip_id},{$set: { 'times' : rs.times + 1,'stars': rs.stars + req.body.stars}},(err, rs) =>{
+  //   if(err) return res.status(400).json({error:err.message})
+  //   return res.status(200).json({msg:'reviewed successfully...'})
+  // })
+
+  //   doPaymentM(req, res)
+//     }
+// });
+});
+
 function verifyToken(req, res, next) {
   let token = req.query.jwt
   if (typeof token !== 'undefined') {
@@ -214,8 +278,18 @@ function verifyToken(req, res, next) {
       if (err) {
         res.sendStatus(403);
       } else {
-        req.user = authData.user
-        next()
+        DbService.getInfoUser(authData.user.email,(result) => {
+          if(result){
+              req.user = {
+                account :authData.user,
+                info: result[0] || []
+               }
+              next()
+             
+            } else return res.status(400).json({msg: 'failed'})
+        })
+       
+      
         // res.status(200).json(authData);
       }
     });

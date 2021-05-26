@@ -24,7 +24,7 @@ require('../config/passport.conf')(passport);
 router.get('/account', forwardAuthenticated, (req, res) => res.render('register',{title:"ticketMe| Tài khoản"}));
 
 router.get('/me',ensureAuthenticatedForUser, (req,res) =>{
-console.log(req.user);
+console.log('/me');
   res.render('account',{
     user: req.user
   })
@@ -327,7 +327,7 @@ router.post('/account/register', (req, res) => {
 
 // Login handler
 router.post('/account/login', (req, res, next) => {
-  console.log("loggin");
+  // console.log("loggin");
   passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/user/account#dangnhap',

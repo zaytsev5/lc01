@@ -22,9 +22,6 @@ paypal.configure({
 });
 
 app.use(express.json)
-app.use(bodyParser.json())
-
-
 router.get('/', forwardAuthenticated, (req, res) => res.redirect('home'));
 
 router.get('/busexpress/trips',(req,res) =>{
@@ -32,13 +29,12 @@ router.get('/busexpress/trips',(req,res) =>{
     user: req.user
   });
 })
-
+      
 router.get('/booking/tickets',(req,res) =>{
   res.render('ticketinfo',{
      user: req.user
   });
 })
-
 
 router.post('/customer/insert',async (req, res) =>{
   // return doPayment(req,res)

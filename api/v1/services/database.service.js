@@ -138,7 +138,7 @@ module.exports = {
  	let query = 'insert into `hoadon`(`MaVeXe`,`Email`,`NgayDat`) values (?,?,?)'
  	let not = false;
  	mysqlDB.query(query,bind,(err,result)=>{
- 		if(err) return callback(not)
+ 		if(err) return callback(err)
  		callback(result)
  	})
  },
@@ -242,9 +242,8 @@ module.exports = {
  	})
  },
  updateCus:function(email,cus,callback){
- 	let query = 'update `khachhang` set `TenKH` = ?, `SDT`= ?, `DiaChi`= ? where `Email` =?'
+ 	let query = 'update `khachhang` set  `SDT`= ?, `DiaChi`= ? where `Email` =?'
  	let bind=[];
-	bind.push(cus.TenKH)
 	bind.push(cus.SDT)
 	bind.push(cus.DiaChi)
  	bind.push(email);
