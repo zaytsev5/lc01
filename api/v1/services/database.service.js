@@ -6,12 +6,12 @@ const mysqlDB = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'final_booking_system'
+//   database: 'final_booking_system'
 }
   )
 
 mysqlDB.connect(function(err){
-  if(err) return console.log(err)
+  if(err) return console.log(err.message)
 //   console.log("Mysql connected...")
 })
 

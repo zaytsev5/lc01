@@ -13,7 +13,6 @@ const upload = require('../utils/multer')
 const cloudinary = require('../utils/cloudinary')
 const {doPayment, sendMailToCus,finalCheckSeatStatus, doPaymentM} = require('../services/payment.service');
 
-
 require('../../../config/passport.conf')(passport);
 
 let uid = null;
@@ -245,7 +244,7 @@ router.post('/m/pay', async (req, res) => {
         
       })
     } else {
-      console.log('me 2');
+      //console.log('me 2');
       DbService.updateCus(req.body.Email, req.body, (result) => {
         if (result) {
           console.log('have booked...');
