@@ -2,7 +2,7 @@ const paypal = require('paypal-rest-sdk')
 const nodemailer = require('nodemailer')
 const DbService = require('../services/database.service');
 
-const client = require('twilio')('AC6535235a8a08095181d8689c33135bb4', '70d772bd655a3a5af872f97d6162000a')
+const client = require('twilio')('AC6535235a8a08095181d8689c33135bb4', 'ade52de0cdd1fe620af4b329bd892f8e')
 console.log(process.env.TWILIO_ACCOUNT_SID)
 
 
