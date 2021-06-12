@@ -5,7 +5,7 @@ var HoaDon = require('../modelsAdmin/hoadonModels.js');
 exports.getAllHoaDon = function(req, res) {
     HoaDon.getAllHoaDon(function(err, hoadon) {
 
-        console.log('controller')
+        console.log('controller hoa dow')
         if (err) res.send(err);
        // console.log('res',hoadondatvexe);
         res.send(hoadon);

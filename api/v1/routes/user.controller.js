@@ -50,17 +50,17 @@ router.post('/register',(req, res) =>{
   }).then(user => {
     if(user){
       console.log('existing...');
-     res.status(400).json({message: 'email is being used, please use another...'})
+     res.status(400).json({msg: 'email is being used, please use another...'})
 
     }
     else new_client.save()
       .then((rs, err) => {
         if(err)
           return res.status(400).json({
-            message: 'failed to register....'
+            msg: 'failed to register....'
           })
         return res.status(200).json({
-          message: 'successed! you can log in now...'
+          msg: 'successed! you can log in now...'
         })
       })
     })
@@ -92,7 +92,7 @@ router.get('/booked_tickets',verifyToken, (req, res) => {
   DbService.getAllTicketsByEmail(req.user.email, (result) => {
     if(result) return res.status(200).json(result)
     return res.status(400).json({
-      message: 'failed to get request....'
+      message: 'not OK....'
     })
   })
 })
@@ -111,7 +111,7 @@ router.post('/booking/:trip_id', ( req, res) => {
 router.get('/login/error', (req, res) => {
   return res.status(400).json({
     type: 'error',
-    message: 'Falied to login, maybe wrong crenditals'
+    msg: 'Falied to login, maybe wrong crenditals'
   })
 })
 
@@ -132,7 +132,7 @@ router.post('/m/login', (req, res, next) => {
   }).then(user => {
     // email not existing
     if (!user) {
-      console.log('wrong');
+      // console.log('wrong');
       return res.status(401).json({
         msg : 'unauthorized...'
       })
@@ -151,7 +151,7 @@ router.post('/m/login', (req, res, next) => {
             token: token,
             info: result[0] ||{} 
           })
-        }  res.status(400).json({msg: 'failed'})
+        }  res.status(400).json({msg: 'not OK'})
       })
      
     });
@@ -162,7 +162,7 @@ router.post('/m/login', (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout();
   return res.status(200).json({
-    message: 'you just have logged out...'
+    msg: 'OK'
   })
 });
 
@@ -177,7 +177,7 @@ router.get('/tickets',async (req, res) =>{
  
 })
 
-router.post('/avt',upload.single("image"),async(req, res) => {
+router.post('/avt',upload.single("image"), async(req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -217,14 +217,33 @@ router.post('/review',verifyToken,(req, res) => {
   
 })
 
-router.post('/profile',(req, res) =>{
-  DbService.updateCus(req.body.email,req.body, (result) => {
-    if(result){
-      return res.status(200).json({msg: 'updated successfully...'})
+// router.post('/profile',(req, res) =>{
+//   DbService.updateCus(req.body.email,req.body, (result) => {
+//     if(result){
+//       return res.status(200).json({msg: 'updated successfully...'})
+//     }
+//     res.status(202).json({msg: 'cannot update...'})
+//   })
+// })
+
+router.post('/m/profile',verifyToken,async (req,res) =>{
+
+    if(!req.body.new || req.body.new.length < 6){
+      
+        return   res.status(400).json({msg: 'wrong credentials...'})
     }
-    res.status(202).json({msg: 'cannot update...'})
+    if(req.body.old === req.user.password ){
+      Client.updateOne({'email' : req.user.email},{$set: { 'password' : req.body.new}},(err,result)=>{
+        if(err) return res.status(400).json({msg: 'wrong credentials...'})
+        return   res.status(200).json({msg: 'OK'})
+      });
+      
+    }
+    else {
+      return   res.status(400).json({msg: 'wrong credentials...'})
+    }
+  
   })
-})
 
 router.post('/m/pay', async (req, res) => {
   console.log(req.body);
@@ -260,6 +279,7 @@ router.post('/m/pay', async (req, res) => {
   })
 
 
+// });
   // Client.updateOne({'email': req.body.trip_id},{$set: { 'times' : rs.times + 1,'stars': rs.stars + req.body.stars}},(err, rs) =>{
   //   if(err) return res.status(400).json({error:err.message})
   //   return res.status(200).json({msg:'reviewed successfully...'})
@@ -267,7 +287,6 @@ router.post('/m/pay', async (req, res) => {
 
   //   doPaymentM(req, res)
 //     }
-// });
 });
 
 function verifyToken(req, res, next) {

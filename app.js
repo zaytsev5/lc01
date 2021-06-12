@@ -10,19 +10,19 @@ const { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} 
 
 
 const errorHandler = require('./api/v1/helpers/error-handler')
-const routeAdmin = require('./routes/admin')
-const routeUser = require('./routes/users')
+const routeAdmin = require('./routes/admin.route/index')
+const routeUser = require('./routes/user.route')
 
-const API_BenXe = require('./routesAdmin/benxeRoutes');
-const API_Xe = require('./routesAdmin/xeRoutes');
-const API_tuyenXe = require('./routesAdmin/tuyenxeRoutes');
-const API_ChuyenXe = require('./routesAdmin/chuyenxeRoutes');
-const API_KhachHang = require('./routesAdmin/khachhangRoutes');
-const API_ChiTietVeXe = require('./routesAdmin/chitietvexeRoutes');
-const API_ChiTietVeXeHuy = require('./routesAdmin/chitietvexehuyRoute');
-const API_HoaDon = require('./routesAdmin/hoadonRoutes');
+const API_BenXe = require("./routes/admin.route/benxeRoutes");
+const API_Xe = require("./routes/admin.route/xeRoutes");
+const API_tuyenXe = require("./routes/admin.route/tuyenxeRoutes");
+const API_ChuyenXe = require("./routes/admin.route/chuyenxeRoutes");
+const API_KhachHang = require("./routes/admin.route/khachhangRoutes");
+const API_ChiTietVeXe = require("./routes/admin.route/chitietvexeRoutes");
+const API_ChiTietVeXeHuy = require("./routes/admin.route/chitietvexehuyRoute");
+const API_HoaDon = require("./routes/admin.route/hoadonRoutes");
 //const routesTaiKhoan = require('./routesAdmin/taikhoanRoutes');
-const API_User = require('./routesAdmin/userRoutes')
+const API_User = require("./routes/admin.route/userRoutes")
 
 
 
@@ -53,7 +53,7 @@ app.use(
   })
 );
 app.use(errorHandler)
-app.use(require('cors')())
+// app.use(require('cors')())
 
 
 // Passport middleware
@@ -89,63 +89,63 @@ app.use('/api/v1',require('./api/v1/'))
 // app.use('/api/v1/admin',require('./api/v1/routes/admin'))
 app.use('/', require('./routes/index.js'));
 app.use('/user', routeUser);
-app.use('/admin', ensureAuthenticatedForAdmin,routeAdmin);
+app.use('/admin',routeAdmin);
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 
 //Route Admin
-app.get("/allusers",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/user");
-});
-app.get("/tablebenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableBenXe");
-});
-app.get("/tablexe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableXe");
-});
-app.get("/tabletuyenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableTuyenXe");
-});
-app.get("/tablechuyenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableChuyenXe");
-});
-app.get("/tablekhachhang",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableKhachHang");
-});
-app.get("/tablevexe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableVeXe");
-});
-app.get("/tablehoadon",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableHoaDon");
-});
-app.get("/editbenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/editBenXe");
-});
-app.get("/editxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/editXe");
-});
-app.get("/edittuyenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/editTuyenXe");
-});
-app.get("/editchuyenxe",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/editChuyenXe");
-});
-app.get("/editkhachhang",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/editKhachHang");
-});
-app.get("/statistical",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/statistical");
-});
-app.get("/huyve",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/huyVeXe")
-});app.get("/duyetvehuy",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/DuyetVeHuy")
-});app.get("/doanhthu",ensureAuthenticatedForAdmin,function(req,res){
-  res.render("admin/tableDoanhThu")
-});
+// app.get("/allusers",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/user");
+// });
+// app.get("/tablebenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableBenXe");
+// });
+// app.get("/tablexe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableXe");
+// });
+// app.get("/tabletuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableTuyenXe");
+// });
+// app.get("/tablechuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableChuyenXe");
+// });
+// app.get("/tablekhachhang",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableKhachHang");
+// });
+// app.get("/tablevexe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableVeXe");
+// });
+// app.get("/tablehoadon",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableHoaDon");
+// });
+// app.get("/editbenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/editBenXe");
+// });
+// app.get("/editxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/editXe");
+// });
+// app.get("/edittuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/editTuyenXe");
+// });
+// app.get("/editchuyenxe",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/editChuyenXe");
+// });
+// app.get("/editkhachhang",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/editKhachHang");
+// });
+// app.get("/statistical",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/statistical");
+// });
+// app.get("/huyve",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/huyVeXe")
+// });app.get("/duyetvehuy",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/DuyetVeHuy")
+// });app.get("/doanhthu",ensureAuthenticatedForAdmin,function(req,res){
+//   res.render("admin/tableDoanhThu")
+// });
 
-API_BenXe(app);
-API_Xe(app);
+// API_BenXe(app);
+// API_Xe(app);
 API_tuyenXe(app);
 API_ChuyenXe(app);
 API_KhachHang(app);

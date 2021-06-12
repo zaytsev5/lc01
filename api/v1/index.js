@@ -88,118 +88,118 @@ router.get('/posts', (req, res) => {
 
 router.get('/m/posts', (req, res) => {
   console.log(" [ℹ] - finding post by date, time....<mobile-version>");
-  const {tripid, date, time} = req.query
-  let seats = []
+      const {tripid, date, time} = req.query
+      let seats = []
 
-  Array(30).fill(null).map((e,i) => {
-    seats.push({
-      code: `A${i +1}`,
-      choose :'0'
-    })
-  })
-  //  res.json(seats)
-
-  DbService.getPostByDateTime(tripid, date, time,(result) => {
-    if(result){
-      result.map(e => {
-        seats[parseFloat(e.SoGhe.slice(1,3)) - 1].choose = '1';
-      })
-       res.status(200).json(seats)
-      // res.json({size:seats.length})
-    }else
-     res.status(400).json({message:'failed to get..'})
-  })
-})
-
-router.get('/trip', (req, res) => {
-  console.log(` [🚌] - getting posts of a trip...`);
-  const { tripid, date } = req.query
-  DbService.getPostsOfTripByDate(tripid, date, (result) => {
-    result
-    ? res.status(200).json(result)
-    : res.status(400).json({message: 'failed to get posts of trip..'})
-  })
-})
-
-router.get('/ticket/check',(req, res) => {
-  console.log(` [✔] - checking ticket...`);
-  let { id} = req.query
-  DbService.checkTicket(id, (result) => {
-    result
-    ? res.status(200).json({result})
-    : res.status(400).json({message: 'failed to check ticket...'})
-  })
-})
-
-router.post('/m/pay',async (req, res) =>{
-  // return PmService.doPayment(req,res)
-  if(req.body){
-    const {SDT,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
-    // customer = req.body;
-    console.log(MaCX)
-    let bind = [];
-    bind.push(Email) 
-    bind.push(TenKH) 
-    bind.push(SDT) 
-    bind.push(GioiTinh) 
-    bind.push(DiaChi) 
-    console.log(`[💺]-Số lượng ghế ${SLGhe.length}`)
-    let next = true;
-                
-    if(req.user && req.user.role == "user"){
-      console.log("[👋]-User has logged in.")
-      // CHECK USER HAS BOOK ANY TICKET EVER?
-       DbService.findUserByEmail(req.user.email,(result)=>{
-          if(result.length > 0) return PmService.doPayment(req,res)
-          else{
-            console.log("[🆕]-first time booking.")
-               DbService.save(bind,(result)=>{
-                  if(result) {
-                    return PmService.doPayment(req,res)
-                  }
-                  else return res.status(201).send({status:1})
-                })
-          }
-       })
-     
-    }
-    else 
-        emailExistence.check(Email,(err, response)=>{
-          if(response)
-             DbService.findCusByEmail(Email, async (result)=>{
-              if(result.length > 0){
-                 console.log("[👋]-customer exist")
-                 req.body.Email = result[0].Email;
-                 req.body.TenKH = result[0].TenKH;
-                 req.body.SDT = result[0].SDT;
-                 req.body.DiaChi = result[0].DiaChi;
-                 req.body.GioiTinh = result[0].GioiTinh;
-                 console.log(req.body)
-                 PmService.doPayment(req,res)
-
-                
-               
-              }else{
-                  console.log("[👋]-req.body doesnt exist")
-                    DbService.save(bind,(result)=>{
-                        if(result) {
-                          PmService.doPayment(req,res)                       
-                        }
-                        else return res.status(201).send({status:1})
-                    })    
-              }    
-      
-          })
-           else return res.status(201).send({status:2})
+      Array(30).fill(null).map((e,i) => {
+        seats.push({
+          code: `A${i +1}`,
+          choose :'0'
         })
+      })
+      //  res.json(seats)
 
-  
+      DbService.getPostByDateTime(tripid, date, time,(result) => {
+        if(result){
+          result.map(e => {
+            seats[parseFloat(e.SoGhe.slice(1,3)) - 1].choose = '1';
+          })
+           res.status(200).json(seats)
+          // res.json({size:seats.length})
+        }else
+         res.status(400).json({message:'failed to get..'})
+      })
+    })
+
+    router.get('/trip', (req, res) => {
+      console.log(` [🚌] - getting posts of a trip...`);
+      const { tripid, date } = req.query
+      DbService.getPostsOfTripByDate(tripid, date, (result) => {
+        result
+        ? res.status(200).json(result)
+        : res.status(400).json({message: 'failed to get posts of trip..'})
+      })
+    })
+
+    router.get('/ticket/check',(req, res) => {
+      console.log(` [✔] - checking ticket...`);
+      let { id} = req.query
+      DbService.checkTicket(id, (result) => {
+        result
+        ? res.status(200).json({result})
+        : res.status(400).json({message: 'failed to check ticket...'})
+      })
+    })
+
+    router.post('/m/pay',async (req, res) =>{
+      // return PmService.doPayment(req,res)
+      if(req.body){
+        const {SDT,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
+        // customer = req.body;
+        console.log(MaCX)
+        let bind = [];
+        bind.push(Email) 
+        bind.push(TenKH) 
+        bind.push(SDT) 
+        bind.push(GioiTinh) 
+        bind.push(DiaChi) 
+        console.log(`[💺]-Số lượng ghế ${SLGhe.length}`)
+        let next = true;
+                    
+        if(req.user && req.user.role == "user"){
+          console.log("[👋]-User has logged in.")
+          // CHECK USER HAS BOOK ANY TICKET EVER?
+           DbService.findUserByEmail(req.user.email,(result)=>{
+              if(result.length > 0) return PmService.doPayment(req,res)
+              else{
+                console.log("[🆕]-first time booking.")
+                   DbService.save(bind,(result)=>{
+                      if(result) {
+                        return PmService.doPayment(req,res)
+                      }
+                      else return res.status(201).send({status:1})
+                    })
+              }
+           })
          
+        }
+        else 
+            emailExistence.check(Email,(err, response)=>{
+              if(response)
+                 DbService.findCusByEmail(Email, async (result)=>{
+                  if(result.length > 0){
+                     console.log("[👋]-customer exist")
+                     req.body.Email = result[0].Email;
+                     req.body.TenKH = result[0].TenKH;
+                     req.body.SDT = result[0].SDT;
+                     req.body.DiaChi = result[0].DiaChi;
+                     req.body.GioiTinh = result[0].GioiTinh;
+                     console.log(req.body)
+                     PmService.doPayment(req,res)
 
-  }else{
-   return res.send({status:1})
-  }
-});
+                    
+                   
+                  }else{
+                      console.log("[👋]-req.body doesnt exist")
+                        DbService.save(bind,(result)=>{
+                            if(result) {
+                              PmService.doPayment(req,res)                       
+                            }
+                            else return res.status(201).send({status:1})
+                        })    
+                  }    
+          
+              })
+               else return res.status(201).send({status:2})
+            })
+
+      
+             
+
+      }else{
+       return res.send({status:1})
+      }
+    });
 
 
 router.post('/m/register', (req, res) => {
@@ -221,10 +221,9 @@ router.post('/m/register', (req, res) => {
  }
 
 
-    console.log(email)
+    // console.log(email)
      emailExistence.check(email, function(error, response){
-        if(error) return console.log(error)
-          console.log(response)
+        if(error) return res.status(400).json({msg: 'email invalid....'})
         if(response){
           Client.findOne({ email: email }).then(user => {
             if (user) {
@@ -249,7 +248,7 @@ router.post('/m/register', (req, res) => {
                     .then(user => {
                       return   res.status(200).json(user)
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => res.status(400).json({msg: 'not OK...'}));
               // });
             }
           });
@@ -307,7 +306,7 @@ router.post('/m/forgot',async (req,res) =>{
         secure: false, // true for 465, false for other ports
         auth: {
             user: 'shinminah357159@gmail.com', // generated ethereal user
-            pass: '01649254108'  // generated ethereal password
+            pass: 'zaytsev@5'  // generated ethereal password
         },
         tls:{
           rejectUnauthorized:false

@@ -134,6 +134,7 @@ $(document).ready(()=>{
 		$("#table-hoadon").attr('height',20);
 		const response=await fetch('http://localhost:5000/hoadon');
 		const data= await response.json();
+		console.log(data)
 		for(var i=0;i < data.length;i++){
 			var element='<td>'+String((Number(i)+1))+'</td>'+'<td>'+data[i].MaVeXe+'</td>'+'<td>'+data[i].Email+'</td>'+'<td>'+data[i].NgayDat+'</td>'+'</tr>';
 			if(i%2==1){

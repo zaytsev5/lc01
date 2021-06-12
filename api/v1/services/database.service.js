@@ -6,7 +6,7 @@ const mysqlDB = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-//   database: 'final_booking_system'
+  database: 'final_booking_system'
 }
   )
 

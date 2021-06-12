@@ -16,15 +16,15 @@ module.exports = {
     res.redirect('/home');      
   },
   ensureAuthenticatedForAdmin:function(req, res, next){
-  
-    if (req.isAuthenticated()) {
-      if(req.user.role === 'admin')
-          return next();
-    }
-    return res.status(400).json({
-      type: "error",
-      message: "access denied..."
-    })
+    next()
+    // if (req.isAuthenticated()) {
+    //   if(req.user.role === 'admin')
+    //       return next();
+    // }
+    // return res.status(400).json({
+    //   type: "error",
+    //   message: "access denied..."
+    // })
     
     //  req.flash('error_msg', 'Vui lòng đăng nhập');
     // res.redirect('/user/account#dangnhap');

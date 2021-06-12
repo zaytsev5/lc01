@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); 
 const passport = require('passport');
 const emailExistence = require('email-existence')
 const bodyParser = require('body-parser')
-const nodemailer = require('nodemailer')
-const app = express();
-
+const nodemailer = require('nodemailer') 
+const app = express(); 
 
 
 // Load User model
 const User = require('../models/Client');
-const UserMysql = require('../models/mysql.service');
+const UserMysql = require('../services/user.db.services');
 const Ticket = require('../models/Ticket');
 const Cancle = require('../config/cancle')
 

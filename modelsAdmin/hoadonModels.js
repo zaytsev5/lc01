@@ -10,7 +10,7 @@ var HoaDon = function(hoadondatvexe){
 	this.NgayDat = hoadondatvexe.NgayDat;
 };
 HoaDon.getAllHoaDon = function getAllHoaDon(result) {
-    sql.query("Select * from vexe", function (err, res) {
+    sql.query("Select * from hoadon", function (err, res) {
 
         if(err) {
             console.log("error: ", err);
