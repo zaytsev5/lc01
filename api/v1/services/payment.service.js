@@ -2,6 +2,10 @@ const paypal = require('paypal-rest-sdk')
 const nodemailer = require('nodemailer')
 const DbService = require('../services/database.service');
 
+const client = require('twilio')('AC6535235a8a08095181d8689c33135bb4', '70d772bd655a3a5af872f97d6162000a')
+console.log(process.env.TWILIO_ACCOUNT_SID)
+
+
 
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
@@ -56,6 +60,22 @@ paypal.configure({
   }
  const sendMailToCus = function (res, req, data) {
    console.log(data);
+      client.messages
+      .create({
+        body: `Đi ngày:${new Date(result[0].NgayDi).toLocaleDateString()}
+        ,Chuyến xe: TPHCM - KienGiang, Số Ghế:${JSON.parse(data.SLGhe)}`,
+        from: '+19724357719',
+        to: '+84333157628'
+      })
+      .then(message => console.log({
+      state: 'Sent.',
+      messageId: message.id
+      
+    })).catch(e => console.log({
+          type: 'error',
+          message: e.message
+      }))
+
     DbService.getInfoPost(data.MaCX, (result) => {
       if (result.length > 0) {
         console.log(result);
