@@ -101,7 +101,7 @@ input {
 .total-price{
   position: absolute;
   color: black;
- bottom: 50px;
+ bottom: 20px;
  right: 100px;
  font-weight: 500px;
 }

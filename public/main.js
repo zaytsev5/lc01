@@ -5,9 +5,10 @@ const apiButton = document.querySelector('#btn');
 let setnums = 0;
 console.log(buttons.length)
 let trips;
+let base_url = 'http://localhost:5000/'
  getApis();
  async function  getApis(){
-	const response = await fetch('http://localhost:5000/trip');
+	const response = await fetch(`${base_url}trip`);
     const myJson = await response.json();
     trips = myJson;
 }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- Flatpickr CSS-->
     <% include ./partials/links %>
-   
+
    <title>BusExpress| Mua vé Sài Gòn An Giang</title>
   </head>
 <body>
@@ -26,17 +26,17 @@
 
     </ul>
   </div>
- 
+
       <p class="seat-pick"></p>
         <section class="top-container">
 
                 <% include ./partials/seatmap %>
-                  
+
                       <div class="top-box top-box-a text-uppercase">
-                          <div class="post" data-trip="T003">CHUYẾN XE</div> 
+                          <div class="post" data-trip="T002">CHUYẾN XE</div>
                           <div class="info-post">
                             <p class="trip-name"><span > SÀI GÒN <i class="fas fa-arrow-right" style="margin:0 10px;"></i>AN GIANG</span></p>
-                            <!-- <p class="to"><i class="fa fa-map-marker" style="color: #3256a4; margin-right: 5px;"></i>Đến<span style="margin-left: 60px;"> AN GIANG</span></p> -->
+                            <!-- <p class="to"><i class="fa fa-map-marker" style="color: #3256a4; margin-right: 5px;"></i>Đến<span style="margin-left: 60px;"> KIÊN GIANG</span></p> -->
                           </div>
                           <p class="bold">Chọn ngày khởi hành</p>
                           <input type="text" id="basicDate" value="2020-05-17" placeholder="Ngày di chuyển" class="center" data-input>
@@ -44,38 +44,39 @@
                           <select name="format" id="time">
                           </select><br/>
                           <button class="cancle">Hủy chuyến</button>
-                          
+
                       </div>
                       <div class="top-box top-box-b text-uppercase">
-                        
                         <div class="post-detail">CHI TIẾT CHUYẾN XE</div>
                         <p class="source-loc" style="margin-bottom: 30px;"><i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>SÀI GÒN</p>
                         <p class="des-loc"><i class="fas fa-map-marked-alt" style="margin-right: 10px"></i>AN GIANG</p>
                         <div class="info-detail">
                           <p><i class="fas fa-table" style="margin-right: 10px"></i>Ngày đi <span style="margin-left: 20px;" class="date-go-detail big"></span></p>
                           <p><i class="fas fa-bed" style="margin-right: 10px"></i>Số ghế<span style="margin-left: 20px;" class="seats-detail big"></span></p>
-                          
+
                           <p><i class="fas fa-ban" style="margin-right: 10px"></i>Miễn phí <span style="margin-left: 20px;" class="free-detail big">
                             <i class="fas fa-wifi" style="margin-right: 10px"></i>
                             <i class="fas fa-wine-bottle" style="margin-right: 10px"></i>
                             <i class="fas fa-toilet-paper" style="margin-right: 10px"></i>
                           </span></p>
                         </div>
-                        
+
                       </div>
             </section>
 <% include ./partials/footer %>
+
 <link rel="stylesheet" href="/booking.css">
-  
-<script src="/book.js" ></script>
+<script src="book.js" ></script>
 <script>
 $(document).ready(function(){
   $(window). scrollTop(0);
-  
+  // var jsAr = new Array();
+  // jsAr = document.querySelectorAll('script');
+  // for(let i  = 0;i<jsAr.length ;i++) jsAr[i].parentNode.removeChild(jsAr[i]);
 })
 
 </script>
-  
+
   </div>
 </body>
 

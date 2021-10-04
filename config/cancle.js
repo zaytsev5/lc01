@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer')
 
 module.exports = {
-	sendMailForCancle: function (response,request,postid){
+	sendMailForCancle: function (req, res, postid){
   const output = `
         <p>Thông báo huỷ vé thành công</p>
         <h3>BusExpress</h3>
-        <ul>  
+        <ul>
           <li>From: BusExpress</li>
           <li>Email: busexpress@gmail.com</li>
           <li>Phone: 190015789</li>
@@ -23,7 +23,7 @@ module.exports = {
         secure: false, // true for 465, false for other ports
         auth: {
             user: 'shinminah357159@gmail.com', // generated ethereal user
-            pass: '01649254108'  // generated ethereal password
+            pass: 'Zaytsev5'  // generated ethereal password
         },
         tls:{
           rejectUnauthorized:false
@@ -33,7 +33,7 @@ module.exports = {
   // setup email data with unicode symbols
       let mailOptions = {
           from: 'BusExpress <shinminah357159@email.com>', // sender addresponses
-          to: request.user.email, // list of receivers
+          to: req.user.email, // list of receivers
           subject: 'BookYourBus', // Subject line
           text: 'Hello world?', // plain text body
           html: output // html body
@@ -42,10 +42,10 @@ module.exports = {
   // send mail with defined transport object
       transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-              return response.send({is:false})
+              return res.status(400).send({is:false})
           }
           console.log('Sent!')
-          response.status(200).send({is:true})
+          res.status(200).send({is:true})
           // response.send({status:true})
       });
 }

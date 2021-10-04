@@ -17,11 +17,11 @@ $('#contact').click(()=>{
   var modal = document.getElementById("myModal");
   var span = document.getElementsByClassName("close")[0];
   let ids;
-  
+  let base_url = 'http://localhost:5000' 
 getApis();// GET INFO TRIPS
 // function get trips
 async function  getApis(){
-    const response = await fetch('http://localhost:5000/admin/trips');
+    const response = await fetch(`${base_url}/admin/trips`);
     const myJson = await response.json();
     trips = myJson;
 }
@@ -43,7 +43,7 @@ async function  findPost(){
 
     findButton.textContent = "Đang tìm...";
     // fetch data available post
-    const response = await fetch(`http://localhost:5000/post/${tripID}/${dateTrip}`);
+    const response = await fetch(`${base_url}/post/${tripID}/${dateTrip}`);
     const myJson = await response.json();
 
      if(myJson.length != 0) {
@@ -104,7 +104,7 @@ $("#basicDate").flatpickr({
 function getStringTripAndGo(){
     let from  = source.value.toLowerCase()
     let to  = des.value.toLowerCase()
-    location.href =  `http://localhost:5000/mua-ve-${from}-${to}?d=${dateTrip}`;  
+    location.href =  `${base_url}/mua-ve-${from}-${to}?d=${dateTrip}`;  
 }
 
 function sliderGroup(){

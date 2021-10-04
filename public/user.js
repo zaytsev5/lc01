@@ -4,7 +4,9 @@ const app = {
     pages: [],
     show: new Event('show'),
     init: function(){
-        let hash = location.hash.replace('#' ,'');
+        let url = location.hash.replace('#' ,'').split("?");
+        let hash = url[0]
+        const query = url[1] || ''
         app.pages = document.querySelectorAll('.form');
         console.log(app.pages)
         app.pages.forEach((pg)=>{
@@ -17,7 +19,8 @@ const app = {
      
         document.querySelector('.active').classList.remove('active');
         document.getElementById(hash).classList.add('active');
-            history.replaceState({}, 'dangnhap', `#${hash}`);
+        hash = query ? hash + '?' + query : hash
+        history.replaceState({}, 'dangnhap', `#${hash}`);
 
         console.log(hash)
         window.addEventListener('popstate', app.poppin);
@@ -40,13 +43,17 @@ const app = {
     },
     poppin: function(ev){
         console.log(location.hash, 'popstate event');
-        let hash = location.hash.replace('#' ,'');
+        let url = location.hash.replace('#' ,'').split("?");
+        let hash = url[0]
+        const query = url[1] || ''
+      
         document.querySelector('.active').classList.remove('active');
         document.getElementById(hash).classList.add('active');
+        hash = query ? hash + '?' + query : hash
         console.log(hash)
         history.pushState({}, hash, `#${hash}`);
         console.log(location.href)
-        document.getElementById(hash).dispatchEvent(app.show);
+        document.getElementById(hash.split('?')[0]).dispatchEvent(app.show);
     }
 }
 document.addEventListener('DOMContentLoaded', app.init);

@@ -1,9 +1,9 @@
-"use strict";
 const express = require("express");
 const router = express.Router();
-console.log('ok')
+// console.log('ok')
 
 var todoList = require("../../controllers/admin.controller/benxeControllers");
+
 
 router.route("/diemdi/:MaTX").get(todoList.getDiemDi);
 
@@ -18,4 +18,4 @@ router
   .delete(todoList.deleteBenXeById);
 
 
- module.exports = router
+module.exports = router

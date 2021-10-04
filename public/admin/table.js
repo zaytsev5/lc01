@@ -1,26 +1,27 @@
-$(document).ready(()=>{
+$(document).ready( async()=>{
 	async function getAllUser(){
 		$('.trash').remove();
 		$("#table-user").attr('height',20);
 		const response=await fetch('http://localhost:5000/getallUsers');
 		const data= await response.json();
 		for(var i=0;i < data.length;i++){
+      console.log('okkkk')
 			var element='<td>'+String((Number(i)+1))+'</td>'+'<td>'+data[i].name+'</td>'+'<td>'+data[i].email+'</td>'+'<td>'+data[i].role+'</td>'+'</tr>';
 			if(i%2==1){
 				$("#table-user").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
-			}else{
-				$("#table-user").append(
-					'<tr height="50px" class="trash">'+element);
-				
+          console.log('sss')
+        }else{
+          $("#table-user").append(
+            '<tr height="50px" class="trash">'+element);
+            console.log('sss')
+
 			}
-				
-				
+
 			}
 	}
 	getAllUser();
-	
+
 	async function getAllXe(){
 		$('.trash').remove();
 		$("#table-xe").attr('height',20);
@@ -31,18 +32,18 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-xe").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}
 			else{
 				$("#table-xe").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
+
+
 			}
 	}
-	
+
 	async function getAllTuyenXe(){
 		$('.trash').remove();
 		$("#table-tuyenxe").attr('height',20);
@@ -53,17 +54,17 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-tuyenxe").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-tuyenxe").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
+
+
 		}
 	}
-	
+
 	async function getAllChuyenXe(){
 		$('.trash').remove();
 		$("#table-chuyenxe").attr('height',20);
@@ -75,17 +76,17 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-chuyenxe").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-chuyenxe").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
+
+
 			}
 	}
-	
+
 	async function getAllKhachHang(){
 		$('.trash').remove();
 		$("#table-khachhang").attr('height',20);
@@ -96,38 +97,39 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-khachhang").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-khachhang").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
+
+
 		}
 	}
-	
-	
-	
+
+
+
 	async function getAllVeXe(){
 		$('.trash').remove();
 		$("#table-vexe").attr('height',20);
 		const response=await fetch('http://localhost:5000/vexe');
 		const data= await response.json();
 		for(var i=0;i < data.length;i++){
-			var element='<td>'+String((Number(i)+1))+'</td>'+'<td>'+data[i].MaVeXe+'</td>'+'<td>'+data[i].MaCX+'</td>'+'<td>'+data[i].SoGhe+'</td>'+'</tr>';
+			var element='<td>'+String((Number(i)+1))+'</td>'+'<td>'+data[i].MaVeXe+'</td>'+
+        '<td>'+data[i].MaCX+'</td>'+'<td>'+data[i].SoGhe+'</td>'+'<td>'+data[i].Email+'</td>'+'<td>'+data[i].NgayDat+'</td>'+'</tr>';
 			if(i%2==1){
 				$("#table-vexe").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-vexe").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
-			}
+
+
+		}
 	}
 	async function getAllHoaDon(){
 		$('.trash').remove();
@@ -140,17 +142,17 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-hoadon").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-hoadon").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
-				
-				
+
+
 		}
 	}
-	
+
 	async function getDoanhThu(){
 		$('.trash').remove();
 		var ngaydat=$('#searchDate').val();
@@ -163,33 +165,33 @@ $(document).ready(()=>{
 			if(i%2==1){
 				$("#table-doanhthu").append(
 					'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-				
+
 			}else{
 				$("#table-doanhthu").append(
 					'<tr height="50px" class="trash">'+element);
-				
+
 			}
 		}
 		$("#table-doanhthu").append('<tr height="50px" class="trash"><td align="right" colspan="7">Tổng Doanh Thu</td><td>'+tongDoanhThu+'</td></tr>');
 	}
-	
+
 	getAllXe();
-	
+
 	getAllTuyenXe();
-	
+
 	getAllChuyenXe();
-	
+
 	getAllKhachHang();
-	
+
 	getAllVeXe();
-	
+
 	getAllHoaDon();
 
-	
-	
-	
+
+
+
 	//lay ra ben xe co thuoc tinh giong voi searchText
-	
+
 	async function getSearchXe(){
 		$('.trash').remove();
 		$("#table-xe").attr('height',20);
@@ -203,15 +205,15 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-xe").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}
 				else{
 					$("#table-xe").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
-			}	
+			}
 		}
 	}
 	async function getSearchTuyenXe(){
@@ -227,17 +229,17 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-tuyenxe").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-tuyenxe").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
-			}		
+			}
 		}
 	}
-	
+
 	async function getSearchChuyenXe(){
 		$('.trash').remove();
 		$("#table-chuyenxe").attr('height',20);
@@ -252,17 +254,17 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-chuyenxe").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-chuyenxe").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
-			}		
+			}
 		}
 	}
-	
+
 	async function getSearchKhachHang(){
 		$('.trash').remove();
 		$("#table-khachhang").attr('height',20);
@@ -276,18 +278,18 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-khachhang").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-khachhang").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
 			}
-					
+
 		}
 	}
-	
+
 	async function getSearchVeXe(){
 		$('.trash').remove();
 		$("#table-vexe").attr('height',20);
@@ -297,27 +299,28 @@ $(document).ready(()=>{
 		const data= await response.json();
 		for(var i=0;i < data.length;i++){
 			if(data[i].MaVeXe.search(text)>-1||data[i].MaCX.search(text)>-1||data[i].SoGhe==Number(text)){
-				var element='<td>'+String((Number(index)+1))+'</td>'+'<td>'+data[i].MaVeXe+'</td>'+'<td>'+data[i].MaCX+'</td>'+'<td>'+data[i].SoGhe+'</td>'+'</tr>';
+				var element='<td>'+String((Number(index)+1))+'</td>'+'<td>'+data[i].MaVeXe+'</td>'+
+        '<td>'+data[i].MaCX+'</td>'+'<td>'+data[i].SoGhe+'</td>'+'<td>'+data[i].Email+'</td>'+'<td>'+data[i].NgayDat+'</td>'+'</tr>';
 				if(index%2==1){
 					$("#table-vexe").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-vexe").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
 			}
 		}
 	}
-	
+
 	async function getSearchHoaDon(){
 		$('.trash').remove();
 		$("#table-hoadon").attr('height',20);
 		var index=0;
 		var text=$('#searchText').val();
-		const response=await fetch('http://localhost:5000/hoadon');
+		const response=await fetch('http://localhost:5000/admin/hoadon');
 		const data= await response.json();
 		for(var i=0;i < data.length;i++){
 			if(data[i].MaVeXe.search(text)>-1||data[i].Email.search(text)>-1||String(data[i].NgayDat).search(text)>-1){
@@ -325,23 +328,23 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-hoadon").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-hoadon").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
 			}
 		}
-			
+
 	}
 	async function getASearchUser(){
 		$('.trash').remove();
 		$("#table-user").attr('height',20);
 		var index=0;
 		var text=$('#searchText').val();
-		const response=await fetch('http://localhost:5000/getallUsers');
+		const response=await fetch('http://localhost:5000/admin/getallUsers');
 		const data= await response.json();
 		for(var i=0;i < data.length;i++){
 			if(data[i].name.search(text)>-1||data[i].email.search(text)>-1||data[i].role.search(text)>-1){
@@ -349,70 +352,70 @@ $(document).ready(()=>{
 				if(index%2==1){
 					$("#table-user").append(
 						'<tr height="50px" class="trash" style="background-color: #E4E4E4;">'+element);
-					
+
 				}else{
 					$("#table-user").append(
 						'<tr height="50px" class="trash">'+element);
-					
+
 				}
 				index++;
 			}
-			
-				
-				
+
+
+
 		}
 	}
 	//click button tim kiem
 	$('#buttonSearchDoanhThu').click(function(){
 		getDoanhThu();
 	});
-	$("#buttonSearchBenXe").click(function(){	
+	$("#buttonSearchBenXe").click(function(){
 		if($('#searchText').val()=="")getAllBenXe();
 		else getSearchBenXe();
 	});
-	$("#buttonSearchXe").click(function(){	
+	$("#buttonSearchXe").click(function(){
 		if($('#searchText').val()=="")getAllXe();
 		else getSearchXe();
 	});
-	$("#buttonSearchTuyenXe").click(function(){	
+	$("#buttonSearchTuyenXe").click(function(){
 		if($('#searchText').val()=="")getAllTuyenXe();
 		else getSearchTuyenXe();
 	});
-	$("#buttonSearchChuyenXe").click(function(){	
+	$("#buttonSearchChuyenXe").click(function(){
 		if($('#searchText').val()=="")getAllChuyenXe();
 		else getSearchChuyenXe();
 	});
-	$("#buttonSearchKhachHang").click(function(){	
+	$("#buttonSearchKhachHang").click(function(){
 		if($('#searchText').val()=="")getAllKhachHang();
 		else getSearchKhachHang();
 	});
-	$("#buttonSearchVeXe").click(function(){	
+	$("#buttonSearchVeXe").click(function(){
 		if($('#searchText').val()=="")getAllVeXe();
 		else getSearchVeXe();
 	});
-	$("#buttonSearchHoaDon").click(function(){	
+	$("#buttonSearchHoaDon").click(function(){
 		if($('#searchText').val()=="")getAllHoaDon();
 		else getSearchHoaDon();
 	});
-	$("#buttonSearchUser").click(function(){	
+	$("#buttonSearchUser").click(function(){
 		if($('#searchText').val()=="")getAllUser();
 		else getASearchUser();
 	});
-	$(".buttonReload").click(function(){	
+	$(".buttonReload").click(function(){
 		$("#searchText").attr("value","");
-		
+
 		getAllBenXe();
-	
+
 		getAllXe();
-	
+
 		getAllTuyenXe();
-	
+
 		getAllChuyenXe();
-	
+
 		getAllKhachHang();
-	
+
 		getAllVeXe();
-	
+
 		getAllHoaDon();
 
 	});

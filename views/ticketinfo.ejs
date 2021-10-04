@@ -144,10 +144,10 @@ $(document).ready(function(){
       
   const checkTicket = document.querySelector('#lookup-ticket');
   const searchticketID = document.querySelector('#search-ticketID')
-
+  const base_url = 'http://localhost:5000'
   checkTicket.addEventListener('click', async ()=>{
      console.log(searchticketID.value)
-    const response =  await fetch(`http://localhost:5000/booking/ticket/${searchticketID.value}`)
+    const response =  await fetch(`${base_url}/booking/ticket/${searchticketID.value}`)
     const ticket = await response.json();
     console.log(ticket)
     if(ticket.length > 0){

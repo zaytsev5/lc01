@@ -14,7 +14,7 @@ exports.getAllXe = function(req, res) {
 
 exports.createXe = function(req, res) {
     var newXe = new Xe(req.body);
-
+  console.log(newXe)
     //handles null error
     if(!newXe.BienSoXe){
 
@@ -26,8 +26,8 @@ exports.createXe = function(req, res) {
         Xe.createXe(newXe, function(err, xe) {
 
             if (err)
-                res.send(err);
-            res.json(xe);
+               return res.json({status: false});
+            return res.json({status: true, data:xe });
         });
     }
 };
@@ -60,9 +60,9 @@ exports.updateXeById = function(req, res) {
 exports.deleteXeById = function(req, res) {
 
 
-    Xe.remove( req.params.BienSoXe, function(err, xe) {
+    Xe.remove( req.params.BienSoXe, function(err, result) {
         if (err)
-            res.send(err);
-        res.json({ message: 'Xe successfully deleted' });
+            return res.send({ status: false});
+        res.json({status: true, data: result });
     });
 };

@@ -13,7 +13,7 @@ let mistakes = [false,false,false,false];
 function handleTypePass(){
    if(password.value.length < 6) rules[0].style.color = 'red'
     else rules[0].style.color = 'green'
-  
+
 }
 function handleConfirmPass(){
 	if(password.value == confirm.value){
@@ -34,7 +34,7 @@ function handleValid(){
 	// const fullvalidRegex = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.*{6,})");
 	if(password.value.length >= 6 ){
 		rules[0].style.color = 'green'
-		
+
 	}else{
 		rules[0].style.color = '#adadad';
 		mistakes[0] = true;
@@ -42,7 +42,7 @@ function handleValid(){
 
 	if(numbericRegex.exec(password.value) != null){
 		rules[1].style.color = 'green'
-		
+
 	}else{
 		rules[1].style.color = '#adadad';
 		mistakes[1] = true
@@ -50,19 +50,19 @@ function handleValid(){
 
 	if(specialSymbolRegex.exec(password.value) != null){
 		rules[2].style.color = 'green'
-		
+
 	}else{
 		rules[2].style.color = '#adadad';
 		mistakes[2] = true;
-		
+
 	}
-	
+
 
 	for(let i = 0; i < mistakes.length; i++){
 		if(mistakes[i] == true) return saveResBtn.disabled = true;
 	}
-	
-	
+
+
 }
 function handleTypePassRes(){
 	 mistakes = [false,false,false,false];
@@ -72,7 +72,7 @@ function handleTypePassRes(){
 	// const fullvalidRegex = new RegExp("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.*{6,})");
 	if(password.value.length >= 6 ){
 		rules[0].style.color = 'green'
-		
+
 	}else{
 		rules[0].style.color = '#adadad';
 		mistakes[0] = true;
@@ -80,7 +80,7 @@ function handleTypePassRes(){
 
 	if(numbericRegex.exec(password.value) != null){
 		rules[1].style.color = 'green'
-		
+
 	}else{
 		rules[1].style.color = '#adadad';
 		mistakes[1] = true
@@ -88,33 +88,33 @@ function handleTypePassRes(){
 
 	if(specialSymbolRegex.exec(password.value) != null){
 		rules[2].style.color = 'green'
-		
+
 	}else{
 		rules[2].style.color = '#adadad';
 		mistakes[2] = true;
-		
+
 	}
 	if(specialSymbolRegex.exec(password.value) != null){
 		rules[2].style.color = 'green'
-		
+
 	}else{
 		rules[2].style.color = '#adadad';
 		mistakes[2] = true;
-		
+
 	}
 	if(password.value == confirm.value){
 		rules[3].style.color = 'green'
-		
+
 	}else{
 		rules[3].style.color = '#adadad';
 		mistakes[3] = true;
-		
+
 	}
-	
+
 
 	for(let i = 0; i < mistakes.length; i++){
 		if(mistakes[i] == true) return saveResBtn.disabled = true;
 	}
 	// console.log("false")
-	
+
 }

@@ -108,13 +108,14 @@ button{
 }
 .control-panel .nav-bar ul{
   position: absolute;
-  left: 35%;
-  top:-35%;
+  left: 40%;
+  top: -35%;
   display: grid;
   grid-gap: 10px;
   padding: 5px 0;
-  list-style: none;
-  grid-template-columns: repeat(4 ,150px);
+  display: flex;
+  gap: 40px;
+  flex-direction: row;
 }
 .control-panel .nav-bar li:hover{
   color:#3256a4;
@@ -678,8 +679,8 @@ svg{
   gap: 10px;
 }
 .dropbtn .user-display-name{
-  max-width: 90px;
-  font-size: 14px;
+  /* max-width: 90px; */
+  font-size: 12px;
   font-weight: 600;
   overflow-x: hidden;
 }
@@ -782,4 +783,22 @@ button:hover{
   100%{
     opacity: 1;
   }
+}
+@media screen and (max-width: 1430px) {
+  .container{
+    width: 1430px;
+    overflow: auto;
+  }
+  .control-panel .nav-bar ul {
+    left: auto;
+  }
+ 
+}
+@media screen and (max-width: 1165px) {
+ 
+  .control-panel .nav-bar ul {
+    left: 20%;
+    gap: 10px;
+  }
+ 
 }

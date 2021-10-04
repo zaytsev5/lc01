@@ -13,10 +13,10 @@ module.exports = {
       return next();
     }
   //  console.log(req.user)
-    res.redirect('/home');      
+    res.redirect('/home');
   },
   ensureAuthenticatedForAdmin:function(req, res, next){
-    next()
+    return next()
     // if (req.isAuthenticated()) {
     //   if(req.user.role === 'admin')
     //       return next();
@@ -25,13 +25,14 @@ module.exports = {
     //   type: "error",
     //   message: "access denied..."
     // })
-    
-    //  req.flash('error_msg', 'Vui lòng đăng nhập');
-    // res.redirect('/user/account#dangnhap');
 
-    
+     req.flash('error_msg', 'Vui lòng đăng nhập');
+    res.redirect('/user/account#dangnhap');
+
+
   },
   ensureAuthenticatedForUser:function(req, res, next){
+    console.log(req._parsedOriginalUrl.pathname)
     if (req.isAuthenticated()) {
      //// console.log(req.user)
       if(req.user.role === 'user')
@@ -40,9 +41,9 @@ module.exports = {
 
     }
      req.flash('error_msg', 'Vui lòng đăng nhập');
-    res.redirect('/user/account#dangnhap');
+    res.redirect(`/user/account#dangnhap?redirect=${req._parsedOriginalUrl.pathname}`);
 
-    
+
   }
 
 

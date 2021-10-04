@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- Flatpickr CSS-->
     <% include ./partials/links %>
-   
+
    <title>BusExpress| Quên mật khẩu</title>
   </head>
 <style>
@@ -38,7 +38,7 @@ body {
   animation: fade 2s ;
   animation-fill-mode:forwards;
 }
-@keyframes{
+@keyframes fade{
   0%{
     opacity: 1;
   }
@@ -47,12 +47,12 @@ body {
   }
 }
 .title {
-  text-align: center;  
+  text-align: center;
   margin: 30px auto 20px 10px;
   font-size: 18px;
 }
 .text-center{
-  text-align: center;  
+  text-align: center;
   margin: 100px auto 10px 10px;
   font-size: 23px;
 
@@ -103,7 +103,7 @@ button {
 }
 
 button:hover {
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 
 #prevBtn {
@@ -118,7 +118,7 @@ button:hover {
   width: 15px;
   margin: 15px 2px;
   background-color: #1e62d8;
-  border: none;  
+  border: none;
   border-radius: 50%;
   display: inline-block;
   opacity: 0.5;
@@ -145,15 +145,16 @@ button:hover {
         <a href="/home" style="text-decoration: none;color: #3256a4;">BusExpress</a>
 </h1>
 <p class="title">Khôi phục mật khẩu</p>
+
 <div class="noti error">
   <i class="fas fa-exclamation-circle fa-1x" style="margin-right: 15px; color: #f55448"></i>
 </div>
 <div id="regForm" >
-  
+
   <!-- One "tab" for each step in the form: -->
   <p style="font-weight: bold;">Nhập địa chỉ email đã kích hoạt của tài khoản của bạn và chúng tôi sẽ gửi cho bạn một mã bí mật để thay đổi mật khẩu</p>
   <div class="tab">
-    <p><input placeholder="Nhập email..."  name="email" required id="email"></p>
+    <p><input placeholder="Nhập email..."  name="email" required id="email" autocomplete="new-password"></p>
      <div style="overflow:auto;">
       <div >
         <button type="button" id="handlePost" onclick="handlePost(event)">Gửi mã xác nhận</button>
@@ -161,7 +162,7 @@ button:hover {
     </div>
   </div>
   <div class="tab">
-    <p><input placeholder="Nhập mã xác nhận" oninput="this.className = ''" id="secret-code"></p>
+    <p><input placeholder="Nhập mã xác nhận" oninput="this.className = ''" id="secret-code" autocomplete="off"></p>
    <div style="overflow:auto;">
       <div >
         <button type="button" id="handleBack" onclick="handleBack()">Back</button>
@@ -171,19 +172,21 @@ button:hover {
   <!--   <p><input placeholder="Phone..." oninput="this.className = ''" name="phone"></p> -->
   </div>
   <div class="tab">
-    <p><input type="text" name="" placeholder="Mật khẩu mới" id="new"></p>
-    <p><input type="text" name="" placeholder="Xác nhận" id="confirm"></p>
+    <form action="" autocomplete="off">
+    <p><input type="password" placeholder="Mật khẩu mới" id="new" autocomplete="off"></p>
+    <p><input type="password" placeholder="Xác nhận" id="confirm" autocomplete="off"></p>
     <div style="overflow:auto;">
       <div >
-        <button type="button" id="handleChange" onclick="handleChange()">Thay đổi</button>
+        <button type="button" id="handleChange" onclick="handleChangePass()">Thay đổi</button>
       </div>
     </div>
+    </form>
   </div>
  <!--  <div class="tab">
     <p><input placeholder="Username..." oninput="this.className = ''" name="uname"></p>
     <p><input placeholder="Password..." oninput="this.className = ''" name="pword" type="password"></p>
   </div> -->
-  
+
   <!-- Circles which indicates the steps of the form: -->
   <div style="text-align:center;margin-top:40px;display: none;">
     <span class="step" id="0"></span>
@@ -194,8 +197,8 @@ button:hover {
 
 </div>
   <% include ./partials/footer %>
-    
-    
+
+
 
 <script src="/resetpass.js"></script>
 

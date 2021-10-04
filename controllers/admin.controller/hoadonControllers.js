@@ -12,7 +12,9 @@ exports.getAllHoaDon = function(req, res) {
     });
 };
 exports.getDoanhThu=function(req,res){
-    HoaDon.getDoanhThu(req.params.NgayDat,function(err,result){
+  console.log(req.query)
+  const dates = [req.query.start, req.query.end]
+    HoaDon.getAllHoaDon(dates, req.query.MaTX || '',function(err,result){
         console.log('controller')
         if (err) res.send(err);
        // console.log('res',hoadondatvexe);

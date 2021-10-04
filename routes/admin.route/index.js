@@ -2,21 +2,24 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated ,ensureAuthenticatedForAdmin} = require('../../config/auth');
 
-
+// console.log('ok')
 const API_BenXe = require("../admin.route/benxeRoutes");
 const API_Xe = require("../admin.route/xeRoutes");
-// const API_tuyenXe = require("../admin.route/tuyenxeRoutes");
-// const API_ChuyenXe = require("../admin.route/chuyenxeRoutes");
-// const API_KhachHang = require("../admin.route/khachhangRoutes");
-// const API_ChiTietVeXe = require("../admin.route/chitietvexeRoutes");
-// const API_ChiTietVeXeHuy = require("../admin.route/chitietvexehuyRoute");
-// const API_HoaDon = require("../admin.route/hoadonRoutes");
-// //const routesTaiKhoan = require('./routesAdmin/taikhoanRoutes');
-// const API_User = require("../admin.route/userRoutes");
-router.use('/',API_Xe)
+const API_tuyenXe = require("../admin.route/tuyenxeRoutes");
+const API_ChuyenXe = require("../admin.route/chuyenxeRoutes");
+const API_KhachHang = require("../admin.route/khachhangRoutes");
+const API_ChiTietVeXe = require("../admin.route/chitietvexeRoutes");
+const API_ChiTietVeXeHuy = require("../admin.route/chitietvexehuyRoute");
+const API_HoaDon = require("../admin.route/hoadonRoutes");
+//const routesTaiKhoan = require('./routesAdmin/taikhoanRoutes');
+const API_User = require("../admin.route/userRoutes");
+router.use('/', API_User)
+router.use('/', API_Xe)
+router.use('/', API_BenXe)
 
 router.get("/allusers", ensureAuthenticatedForAdmin, function (req, res) {
-  res.render("admin/user");
+  console.log('ok')
+  return res.status(200).json({})
 });
 router.get("/tablebenxe", ensureAuthenticatedForAdmin, function (req, res) {
   res.render("admin/tableBenXe");

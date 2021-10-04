@@ -47,7 +47,7 @@ router.get('/seatsbooked',async(req, res) => {
   // })
  const f = await PmService.finalCheckSeatStatus(req.query.postid, seats)
  return res.send(f)
-  
+
 })
 
 router.get('/post',(req, res) => {
@@ -58,7 +58,7 @@ router.get('/post',(req, res) => {
     result
     ? res.status(200).json(result)
     : res.status(400).json({error: 'cannot get requestse...'})
-  }) 
+  })
   : scope.includes('detailed') // get more specificed post info via post_id
   ? DbService.getPostDetailed(id,(result)=>{
     if(result) return res.status(200).json(result)
@@ -68,7 +68,7 @@ router.get('/post',(req, res) => {
 router.get('/trips',(req, res) => {
   console.log(` [🚌] - getting all trips...`);
   DbService.getAllTrips((entry) => {
-    entry 
+    entry
     ? res.status(200).json(entry)
     : res.status(400).json({error: 'failed to get trips.'})
   })
@@ -134,23 +134,27 @@ router.get('/m/posts', (req, res) => {
     router.post('/m/pay',async (req, res) =>{
       // return PmService.doPayment(req,res)
       if(req.body){
-        const {SDT,DiaChi,SLGhe,DonGia,NgayDat,MaCX} = req.body; 
+        const {SDT, DiaChi, SLGhe, MaCX } = req.body;
         // customer = req.body;
         console.log(MaCX)
         let bind = [];
-        bind.push(Email) 
-        bind.push(TenKH) 
-        bind.push(SDT) 
-        bind.push(GioiTinh) 
-        bind.push(DiaChi) 
+        bind.push(TenKH)
+        bind.push(SDT)
+        bind.push(DiaChi)
         console.log(`[💺]-Số lượng ghế ${SLGhe.length}`)
-        let next = true;
-                    
+        console.log('ssss')
         if(req.user && req.user.role == "user"){
           console.log("[👋]-User has logged in.")
           // CHECK USER HAS BOOK ANY TICKET EVER?
            DbService.findUserByEmail(req.user.email,(result)=>{
-              if(result.length > 0) return PmService.doPayment(req,res)
+              if(result.length > 0) {
+                DbService.updateCus(bind, (result) => {
+                  if (result) {
+                    console.log('ok')
+                    // return PmService.doPayment(req,res)
+                  } else return res.status(201).send({ status: 1 });
+                });
+              }
               else{
                 console.log("[🆕]-first time booking.")
                    DbService.save(bind,(result)=>{
@@ -161,9 +165,9 @@ router.get('/m/posts', (req, res) => {
                     })
               }
            })
-         
+
         }
-        else 
+        else
             emailExistence.check(Email,(err, response)=>{
               if(response)
                  DbService.findCusByEmail(Email, async (result)=>{
@@ -177,24 +181,24 @@ router.get('/m/posts', (req, res) => {
                      console.log(req.body)
                      PmService.doPayment(req,res)
 
-                    
-                   
+
+
                   }else{
                       console.log("[👋]-req.body doesnt exist")
                         DbService.save(bind,(result)=>{
                             if(result) {
-                              PmService.doPayment(req,res)                       
+                              PmService.doPayment(req,res)
                             }
                             else return res.status(201).send({status:1})
-                        })    
-                  }    
-          
+                        })
+                  }
+
               })
                else return res.status(201).send({status:2})
             })
 
-      
-             
+
+
 
       }else{
        return res.send({status:1})
@@ -230,7 +234,7 @@ router.post('/m/register', (req, res) => {
               return   res.status(401).json({
                 msg: 'wrong crendentials.'
               })
-              
+
             } else {
               const newClient = new Client({
                 name,
@@ -242,7 +246,7 @@ router.post('/m/register', (req, res) => {
               });
 
               // bcrypt.genSalt(10, (err, salt) => {
-              
+
                 newClient
                     .save()
                     .then(user => {
@@ -258,8 +262,8 @@ router.post('/m/register', (req, res) => {
           })
         }
     });
-   
-  
+
+
 });
 
 
@@ -271,11 +275,11 @@ router.post('/m/register', (req, res) => {
 //     User.updateOne({'email' : req.body.email},{$set: { 'password' : req.body.password}},(err,result)=>{
 //         if(err) return res.send({isChanged:false})
 //             console.log("done")
-            
+
 //         return res.send({isChanged:true})
 //     });
-    
-  
+
+
 // })
 
 router.post('/m/forgot',async (req,res) =>{
@@ -286,11 +290,11 @@ router.post('/m/forgot',async (req,res) =>{
     }
     Client.updateOne({'email' : req.body.email},{$set: { 'password' : '12345678'}},(err,result)=>{
       if(err)  return res.status(401).json({msg: 'something wrong'})
-      
+
       const output = `
         <p>Thông báo thay đổi mật khẩu</p>
         <h3>BusExpress</h3>
-        <ul>  
+        <ul>
           <li>From: BusExpress</li>
           <li>Email: shinminah357159@gmail.com</li>
           <li>Phone: 190012536</li>
@@ -327,17 +331,17 @@ router.post('/m/forgot',async (req,res) =>{
           if (error) {
               return res.status(400).json({msg:error.message})
           }
-          console.log('Message sent: %s', info.messageId);   
+          console.log('Message sent: %s', info.messageId);
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
           console.log('Sent!')
           res.status(200).json({msg: 'OK'})
       });
     });
-      
+
   // console.log(req.body.email)
   });
 
-  
+
 })
 
 router.post('/m/success',async  (req, res) => {

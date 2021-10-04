@@ -10,7 +10,7 @@ var VeXe = function(chitietvexe){
     this.SoGhe = chitietvexe.SoGhe;
 };
 VeXe.getAllVeXe = function getAllVeXe(result) {
-    sql.query("Select * from vexe", function (err, res) {
+    sql.query("Select * from vexe, hoadon where vexe.MaVeXe = hoadon.MaVeXe", function (err, res) {
 
         if(err) {
             console.log("error: ", err);

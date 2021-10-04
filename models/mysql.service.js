@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const VeXe = require('../modelsAdmin/chitietvexeModels');
+// const VeXe = require('../modelsAdmin/chitietvexeModels');
 
 //MySql config
 const mysqlDB = mysql.createConnection({
@@ -19,7 +19,7 @@ mysqlDB.connect(function(err){
 
 module.exports = {
 	// THÍCH THÌ DÙNG KHÔNG THÍCH THÌ THÔI
-	
+
  findPostIdByName:function(src,des,callback){
  	let query = "select * from tuyenxe where DiemDi = ? and DiemDen=?";
  	let bind = [];
@@ -184,8 +184,8 @@ module.exports = {
  }
  ,
  checkTicket:function(ticketId,callback){
-	 let query = `select * from chuyenxe 
-	 INNER JOIN vexe ON vexe.MaCX = chuyenxe.MaCX 
+	 let query = `select * from chuyenxe
+	 INNER JOIN vexe ON vexe.MaCX = chuyenxe.MaCX
 	 INNER JOIN hoadon ON vexe.MaVeXe = hoadon.MaVeXe WHERE vexe.MaVeXe = ?`;
  	mysqlDB.query(query,ticketId,(err, result) =>{
  		if(err) return callback(false)
@@ -198,7 +198,7 @@ module.exports = {
  		if(err) return callback(false)
  			callback(result)
  	})
- 	
+
  },
  getAllTicketsByEmail:function(email,callback){
  	let query = 'select * from `vexe`,`hoadon`,`chuyenxe` where vexe.MaVeXe = hoadon.MaVeXe and vexe.MaCX = chuyenxe.MaCX and hoadon.Email = ?';
@@ -206,7 +206,7 @@ module.exports = {
  		if(err) return callback(false)
  			callback(result)
  	})
- 	
+
  },
  getAllTickets : function(pid,callback){
 	let query = `select * from vexe,hoadon,chuyenxe where vexe.MaVeXe = hoadon.MaVeXe and vexe.MaCX = chuyenxe.MaCX ${pid ? 'and vexe.MaCX= ?' : 'and 1=?' }`;
@@ -239,7 +239,7 @@ module.exports = {
  updateCus:function(email,callback){
  	let query = 'update `khachhang` set `Email` = ? where `CMND` =?'
  	let bind=[];
- 	bind.push(email);	
+ 	bind.push(email);
  	mysqlDB.query(query,bind,(err, result) =>{
  		if(err) return callback(false)
  			callback(result)
@@ -263,7 +263,7 @@ module.exports = {
  	let query = 'update `khachhang` set `Email` = ? where `Email` =?'
  	let bind=[];
  	bind.push(newE);
- 	bind.push(oldE);	
+ 	bind.push(oldE);
  	mysqlDB.query(query,bind,(err, result) =>{
  		if(err) return callback(false)
  			callback(result)

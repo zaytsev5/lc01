@@ -9,6 +9,6 @@ exports.getAllVeXe = function(req, res) {
         console.log('controller')
         if (err) res.send(err);
        // console.log('res', chitietvexe);
-        res.send(chitietvexe);
+       return res.send(chitietvexe);
     });
 };

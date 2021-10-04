@@ -4,7 +4,7 @@ const router = express.Router()
 
    var todoList = require('../../controllers/admin.controller/xeControllers');
 
-	
+
 	/*
 	app.get('/biensoxe/:MaBX',(req,res)=>{
 		let query=`Select * from xe where xe.MaBX = "${req.params.MaBX}" `;
@@ -13,20 +13,40 @@ const router = express.Router()
 		  	res.json(result);
 	  	});
 	});
-	
+
 	*/
-	
-	
+
+
    // todoList Routes
-	
-   router.route('/biensoxe/:MaBX')
+module.exports = function(app) {
+    //var todoList = require('../controllers/hoadonControllers');
+    var User = require('../../models/Client');
+   app.get('/getallUsers',(req,res)=>{
+     User.find().then(users => {
+       console.log(users)
+       return res.json(users)
+     })
+   })
+   app.route('/biensoxe/:MaBX')
        .get(todoList.getXeByMaBX);
-   router.route('/xe')
+   app.route('/xe')
        .get(todoList.getAllXe)
        .post(todoList.createXe);
 
-   router.route('/xe/:BienSoXe')
+   app.route('/xe/:BienSoXe')
        .get(todoList.getXeById)
        .put(todoList.updateXeById)
        .delete(todoList.deleteXeById);
-module.exports = router;
+  //  appp.ro
+ };
+//    router.route('/biensoxe/:MaBX')
+//        .get(todoList.getXeByMaBX);
+//    router.route('/xe')
+//        .get(todoList.getAllXe)
+//        .post(todoList.createXe);
+
+//    router.route('/xe/:BienSoXe')
+//        .get(todoList.getXeById)
+//        .put(todoList.updateXeById)
+//        .delete(todoList.deleteXeById);
+// module.exports = router;

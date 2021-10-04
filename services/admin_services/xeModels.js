@@ -8,10 +8,10 @@ var Xe = function(xe){
     this.BienSoXe = xe.BienSoXe;
     this.LoaiXe = xe.LoaiXe;
     this.SoChoNgoi = xe.SoChoNgoi;
-	this.MaBX = xe.MaBX;
 };
 Xe.createXe = function createUser(newXe, result) {
-    sql.query("INSERT INTO `xe`(`BienSoXe`, `LoaiXe`, `SoChoNgoi`) VALUES (?,?,30,?)", newXe, function (err, res) {
+  console.log(newXe)
+    sql.query("INSERT INTO `xe`(`BienSoXe`, `LoaiXe`, `SoLuongGhe`) VALUES (?,?,?)", Object.values(newXe), function (err, res) {
 
         if(err) {
             console.log("error: ", err);
@@ -74,13 +74,11 @@ Xe.updateXeById = function(xe, result){
 };
 Xe.remove = function(BienSoXe, result){
     sql.query("DELETE FROM xe WHERE BienSoXe = ?", [BienSoXe], function (err, res) {
-
         if(err) {
-            console.log("error: ", err);
-            result(null, err);
+            console.log("error: ", err.message);
+            result(true, null);
         }
         else{
-
             result(null, res);
         }
     });

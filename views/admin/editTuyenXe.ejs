@@ -15,10 +15,10 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="admin/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-  <link type="text/css" rel="stylesheet" href="admin/edit.css" />
+  <link href="/admin/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="/admin/edit.css" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  
+
 </head>
 
 <body class="">
@@ -34,7 +34,7 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          
+
           <li class="nav-item">
             <a class="nav-link" href="/admin/allusers">
               <i class="material-icons">content_paste</i>
@@ -47,14 +47,14 @@
               <p>Chỉnh Sửa</p>
             </a>
           </li>
-          
-          <li class="nav-item">
+
+          <!-- <li class="nav-item">
             <a class="nav-link" href="/admin/huyve">
               <i class="material-icons">delete</i>
               <p>Hủy Vé</p>
             </a>
-          </li>
-          
+          </li> -->
+
         </ul>
       </div>
     </div>
@@ -98,7 +98,7 @@
                     Some Actions
                   </p>
                 </a>
-                
+
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -116,12 +116,12 @@
         </div>
       </nav>
       <!-- End Navbar -->
-     <!--chose table--> 
+     <!--chose table-->
 
   <div class="panel-chosetable">
     <table width="980px">
       <tr>
-        
+
         <td>
           <a href="/admin/editxe">
             <p class="item-chose-table">Xe</p>
@@ -142,17 +142,17 @@
             <p class="item-chose-table">Khách Hàng</p>
           </a>
         </td>
-        
+
       </tr>
     </table>
   </div>
    <!--insert data-->
-  
-     
-  
-   
-   
-  
+
+
+
+
+
+
   <div align="center" class="panel-insert">
     <form>
     <table height="350px" width="800px"  border="0" cellspacing="0">
@@ -200,21 +200,21 @@
       </tr>
       <tr align="center">
         <td  colspan="2">
-          <button class="btn" id="buttonInsertTuyenXe" type="submit">Thêm</button>
+          <!-- <button class="btn" id="buttonInsertTuyenXe" type="submit">Thêm</button> -->
           <button class="btn" id="buttonUpdateTuyenXe" type="submit">Sửa</button>
-          <button class="btn" id="buttonDeleteTuyenXe" type="submit">Xóa</button>
+          <!-- <button class="btn" id="buttonDeleteTuyenXe" type="submit">Xóa</button> -->
         </td>
     </tr>
     </table>
-    
+
     </form>
   </div>
-  
+
    <!-- display data-->
-    
-    
-    
-    
+
+
+
+
     <div class="div-table">
     <div class="divtable" style="height:700px;">
       <form>
@@ -227,14 +227,14 @@
             <td>DonGia</td>
           </tr>
         </table>
-        
+
       </form>
     </div>
-      
-    </div>   
-    
-    
-      
+
+    </div>
+
+
+
   <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
       <a href="#" data-toggle="dropdown">
@@ -276,15 +276,15 @@
             <img src="http://localhost:5000/admin/img/sidebar-4.jpg" alt="">
           </a>
         </li>
-        
+
         <!-- <li class="header-title">Want more components?</li>
             <li class="button-container">
                 <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
                   Get the pro version
                 </a>
             </li> -->
-        
-        
+
+
       </ul>
     </div>
   </div>
@@ -323,14 +323,11 @@
   <!-- Library for adding dinamically elements -->
   <script src="/admin/material/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
-  
+
   <!-- Chartist JS -->
-  <script src="/admin/material/chartist.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="/admin/material/bootstrap-notify.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="/admin/material/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
-  
+
+  <!-- <script src="/admin/edit.js"></script> -->
+
   <script src="/admin/edit.js"></script>
   <script>
     $(document).ready(function() {
@@ -506,7 +503,7 @@
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+      // md.initDashboardPageCharts();
 
     });
   </script>
