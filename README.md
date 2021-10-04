@@ -3,7 +3,6 @@
 This is a user login and registration app using Node.js, Express, Passport, Mongoose, EJS and some other packages.
 
 ### Version: 2.0.0
-tetststststststststststst
 ### Usage
 nguyen vhaia
 ```sh
@@ -15,7 +14,6 @@ $ npm start
 # Or run with Nodemon
 $ npm run dev
 
-this is or nest
 
 # Visit http://localhost:5000
 ```
