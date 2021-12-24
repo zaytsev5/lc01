@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
     password : '',
     database : 'booking_ticket'
 })
-connection.connect(function(err){
+connection.connect((err) => {
     if(err)  throw err;
     console.log('Done')
 })
