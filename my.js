@@ -1,11 +1,14 @@
-var mysql = require('mysql')
-var connection = mysql.createConnection({
+const mysql = require('mysql')
+const connection = mysql.createConnection({
     host:'localhost',
     user: 'root',
     password : '',
-    database : 'booking_ticket'
+    database : 'booking_ticket',
+    port: 3306
 })
 connection.connect((err) => {
     if(err)  throw err;
     console.log('Done')
 })
+
+module.exports = connection;
