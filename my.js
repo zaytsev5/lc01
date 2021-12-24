@@ -6,9 +6,9 @@ const connection = mysql.createConnection({
     database : 'booking_ticket',
     port: 3306
 })
-connection.connect((err) => {
-    if(err)  throw err;
-    console.log('Done')
+connection.connect((err) => {i
+    if(err) throw err;
+    console.log('Mysql database connected!')
 })
 //s
 module.exports = connection;
